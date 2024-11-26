@@ -1,0 +1,4 @@
+package com.helpinghandslocation.helpinghandslocation.persistence.repositories;
+
+public interface UserRepository {
+}
