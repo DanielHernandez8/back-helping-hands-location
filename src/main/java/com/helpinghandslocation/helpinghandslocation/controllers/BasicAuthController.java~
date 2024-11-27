@@ -19,4 +19,11 @@ public class BasicAuthController {
         User u = (User) upa.getPrincipal(); // Si en IntelliJ nos da un error cannot find symbol, significa que no esta pillando el getter de la id
         return ResponseEntity.ok().body("{\"resp\":\"Login exitoso\", \"id\":"+u.getId()+"}");
     }
+
+    @PostMapping(path = "/logout")
+    public ResponseEntity<String> logout(HttpSession session) {
+        session.invalidate(); // Invalida la sesión actual
+        return ResponseEntity.ok().body("{\"resp\":\"Logout exitoso\"}");
+    }
+
 }

@@ -1,7 +1,7 @@
 package com.helpinghandslocation.helpinghandslocation.services;
 
-// importar User y UserRepository
-
+import com.helpinghandslocation.helpinghandslocation.persistence.entities.User;
+import com.helpinghandslocation.helpinghandslocation.persistence.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,6 +21,4 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
         return user;
     }
-
 }
-

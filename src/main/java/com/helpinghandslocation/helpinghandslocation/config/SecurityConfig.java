@@ -50,31 +50,18 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable()) // Deshabilitamos la protección CSRF
+        http.csrf(csrf -> csrf.disable())// Deshabilitamos la protección contra ataques Cross-site request forgery
                 .cors(withDefaults())
                 .authorizeHttpRequests((requests) -> {
                     try {
-                        // Definimos que urls estarán desprotegidas y no necesitarán credenciales
-                        requests.requestMatchers("/login", "/users/create").permitAll()
-                                .anyRequest().authenticated();
+                        // Definimos que urls estarán desprotegidas y no necesitarán recibir las credenciales para poder ser accedidas
+                        requests.requestMatchers("/login","/login/").permitAll().anyRequest().authenticated();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                })
-                .httpBasic(withDefaults())
-                .logout(logout -> {
-                    logout.logoutUrl("/logout") // Endpoint para realizar el logout
-                            .logoutSuccessHandler((request, response, authentication) -> {
-                                // Respuesta personalizada tras el logout
-                                response.setStatus(200);
-                                response.getWriter().write("{\"resp\":\"Logout exitoso\"}");
-                            })
-                            .invalidateHttpSession(true) // Invalida la sesión actual
-                            .deleteCookies("JSESSIONID"); // Elimina cookies asociadas a la sesión
-                });
+                }).httpBasic(withDefaults());
         return http.build();
     }
-
 
     // Configuración del CORS (Cross-origin resource sharing)
     @Bean
