@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 
 @RestController
 @CrossOrigin
@@ -21,9 +19,9 @@ public class LocationController {
     @PostMapping("/locations")
     public Location getLocations(@RequestBody Location locations) {
         Location location = new Location();
-        location.setName(location.getName());
-        location.setLatitude(location.getLatitude());
-        location.setLongitude(location.getLongitude());
+        location.setName(locations.getName());
+        location.setLatitude(locations.getLatitude());
+        location.setLongitude(locations.getLongitude());
         Location savedLocation = locationRepository.save(location);
         return savedLocation;
     }
