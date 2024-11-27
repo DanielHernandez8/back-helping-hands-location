@@ -26,9 +26,6 @@ public class SecurityConfig {
     private String localDomainFront;
 
     @Autowired
-    private JwtRequestFilter jwtRequestFilter;
-
-    @Autowired
     private UserDetailsService userDetailsService;
 
     @Autowired
