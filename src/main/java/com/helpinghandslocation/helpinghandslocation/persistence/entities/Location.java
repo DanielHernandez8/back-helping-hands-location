@@ -18,6 +18,11 @@ public class Location implements Serializable {
     private double longitude;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "location_tags",
+            joinColumns = @JoinColumn(name = "location_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
     private List<Tag> tags;
 
 
