@@ -24,17 +24,19 @@ public class LocationController {
     TagRespository tagRespository;
 
     @PostMapping
-    public Location saveLocations(@RequestBody LocationTagDTO locationTagDTO) {
+    public Location saveLocations (@RequestBody LocationTagDTO locationTagDTO) {
         Location location = new Location();
         location.setName(locationTagDTO.getName());
         location.setLatitude(locationTagDTO.getLatitude());
         location.setLongitude(locationTagDTO.getLongitude());
 
         for (Integer tagId : locationTagDTO.getTagIds()) {
-            Tag tag = tagRespository.findById(Long.valueOf(tagId)).orElse(null);
+            Tag tag = tagRespository.findById(tagId).orElse(null);
             location.getTags().add(tag);
         }
 
-        return locationRepository.save(location);
+        locationRepository.save(location);
+
+        return location;
     }
 }

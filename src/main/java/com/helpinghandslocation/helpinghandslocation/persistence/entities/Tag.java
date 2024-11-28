@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,10 +23,10 @@ public class Tag implements Serializable {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "tags", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Location> locations;
+    private List<Location> locations = new ArrayList<>();
 
-    public Tag(long id, String name) {
-        this.id = (int) id;
+    public Tag(Integer id, String name) {
+        this.id = id;
         this.name = name;
     }
 }
