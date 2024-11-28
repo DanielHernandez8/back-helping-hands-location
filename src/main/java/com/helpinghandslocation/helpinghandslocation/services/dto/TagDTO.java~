@@ -1,0 +1,11 @@
+package com.helpinghandslocation.helpinghandslocation.services.dto;
+
+import com.helpinghandslocation.helpinghandslocation.persistence.entities.Tag;
+import lombok.Data;
+
+import java.util.List;
+
+@Data
+public class TagDTO extends Tag {
+    private List<Tag> tagIds;
+}

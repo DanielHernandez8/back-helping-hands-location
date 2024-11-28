@@ -52,9 +52,9 @@ public class SecurityConfig {
                 .cors(withDefaults())
                 .authorizeHttpRequests((requests) -> {
                     try {
-                        // Definimos que URLs estarán desprotegidas y no necesitarán credenciales
-                        requests.requestMatchers("/login", "/login/", "/register").permitAll()
-                                .anyRequest().authenticated();
+
+                        // Definimos que urls estarán desprotegidas y no necesitarán recibir las credenciales para poder ser accedidas
+                        requests.requestMatchers("/login","/users/create").permitAll().anyRequest().authenticated();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

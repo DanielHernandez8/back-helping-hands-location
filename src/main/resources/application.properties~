@@ -12,11 +12,7 @@ spring.jpa.show-sql=true
 spring.jpa.generate-ddl=true
 spring.sql.init.mode=always
 
-spring.jpa.hibernate.ddl-auto=update
+spring.jpa.hibernate.ddl-auto=create
+
 
 jwt.secret=jwtSecret
-
-spring.security.oauth2.client.registration.google.client-id=1039359974861-h75rte4utk2en4o9d7n853cq2o7fnmar.apps.googleusercontent.com
-spring.security.oauth2.client.registration.google.client-secret=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
-
-
