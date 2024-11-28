@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -23,6 +24,9 @@ public class SecurityConfig {
 
     @Value("${app.local-domain-front}")
     private String localDomainFront;
+
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -55,12 +59,15 @@ public class SecurityConfig {
                 .authorizeHttpRequests((requests) -> {
                     try {
                         // Definimos que urls estarán desprotegidas y no necesitarán recibir las credenciales para poder ser accedidas
-                        requests.requestMatchers("/login","/login/").permitAll().anyRequest().authenticated();
+                        requests.requestMatchers("/login","/users/create").permitAll().anyRequest().authenticated();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }).httpBasic(withDefaults());
+                })
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+                .httpBasic(withDefaults());
         return http.build();
+
     }
 
     // Configuración del CORS (Cross-origin resource sharing)

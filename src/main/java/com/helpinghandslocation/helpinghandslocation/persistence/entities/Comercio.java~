@@ -1,0 +1,4 @@
+package com.helpinghandslocation.helpinghandslocation.persistence.entities;
+
+public class Comercio {
+}
