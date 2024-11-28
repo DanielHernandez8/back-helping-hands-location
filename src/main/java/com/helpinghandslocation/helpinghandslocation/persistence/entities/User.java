@@ -19,6 +19,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Para generar números autoincrementados
     private int id;
+    @Column(unique = true)
     private String username;
     private String password;
     private boolean accountNonExpired;
@@ -26,6 +27,9 @@ public class User implements UserDetails {
     private boolean credentialsNonExpired;
     private boolean enabled;
 
+    @ManyToOne
+    @JoinColumn(name = "type_id")
+    private Type type;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
