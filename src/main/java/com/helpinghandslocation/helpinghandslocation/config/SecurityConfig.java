@@ -13,7 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -34,11 +33,6 @@ public class SecurityConfig {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public AuthenticationSuccessHandler succesHandler() {
-        return (request, response, authentication) -> response.sendRedirect("/");
-
-    }
-
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
@@ -54,10 +48,11 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())// Deshabilitamos la protección contra ataques Cross-site request forgery
+        http.csrf(csrf -> csrf.disable()) // Deshabilitamos la protección contra ataques CSRF
                 .cors(withDefaults())
                 .authorizeHttpRequests((requests) -> {
                     try {
+
                         // Definimos que urls estarán desprotegidas y no necesitarán recibir las credenciales para poder ser accedidas
                         requests.requestMatchers("/login","/users/create").permitAll().anyRequest().authenticated();
                     } catch (Exception e) {
@@ -65,9 +60,10 @@ public class SecurityConfig {
                     }
                 })
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
-                .httpBasic(withDefaults());
-        return http.build();
+                .oauth2Login(withDefaults())  // Añadimos soporte para OAuth2 (login con Google)
+                .httpBasic(withDefaults()); // Habilitamos autenticación básica (por si se necesita)
 
+        return http.build();
     }
 
     // Configuración del CORS (Cross-origin resource sharing)
