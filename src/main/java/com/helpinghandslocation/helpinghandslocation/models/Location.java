@@ -1,9 +1,10 @@
-package com.helpinghandslocation.helpinghandslocation.persistence.entities;
+package com.helpinghandslocation.helpinghandslocation.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,7 +24,7 @@ public class Location implements Serializable {
             joinColumns = @JoinColumn(name = "location_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    private List<Tag> tags;
+    private List<Tag> tags = new ArrayList<>();
 
 
 }

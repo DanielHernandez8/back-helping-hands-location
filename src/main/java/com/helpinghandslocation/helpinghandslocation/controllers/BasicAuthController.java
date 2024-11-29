@@ -1,6 +1,6 @@
 package com.helpinghandslocation.helpinghandslocation.controllers;
 
-import com.helpinghandslocation.helpinghandslocation.persistence.entities.User;
+import com.helpinghandslocation.helpinghandslocation.models.User;
 import com.helpinghandslocation.helpinghandslocation.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

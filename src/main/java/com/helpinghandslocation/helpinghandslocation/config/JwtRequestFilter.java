@@ -1,6 +1,5 @@
 package com.helpinghandslocation.helpinghandslocation.config;
 
-import com.helpinghandslocation.helpinghandslocation.services.CustomUserDetailsService;
 import com.helpinghandslocation.helpinghandslocation.utils.JwtTokenUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;

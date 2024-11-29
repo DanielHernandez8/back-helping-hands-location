@@ -1,10 +1,10 @@
 package com.helpinghandslocation.helpinghandslocation.controllers;
 
 import com.helpinghandslocation.helpinghandslocation.config.Encoder;
-import com.helpinghandslocation.helpinghandslocation.persistence.entities.Type;
-import com.helpinghandslocation.helpinghandslocation.persistence.entities.User;
-import com.helpinghandslocation.helpinghandslocation.persistence.repositories.UserRepository;
-import com.helpinghandslocation.helpinghandslocation.services.dto.UserDTO;
+import com.helpinghandslocation.helpinghandslocation.models.Type;
+import com.helpinghandslocation.helpinghandslocation.models.User;
+import com.helpinghandslocation.helpinghandslocation.repositories.UserRepository;
+import com.helpinghandslocation.helpinghandslocation.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

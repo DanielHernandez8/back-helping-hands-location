@@ -1,5 +1,6 @@
-package com.helpinghandslocation.helpinghandslocation;
+package com.helpinghandslocation.helpinghandslocation.utils;
 
+import com.helpinghandslocation.helpinghandslocation.HelpinghandslocationApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
