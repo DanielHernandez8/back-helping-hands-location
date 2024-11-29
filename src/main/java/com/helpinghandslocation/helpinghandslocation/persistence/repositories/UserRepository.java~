@@ -1,7 +1,0 @@
-package com.helpinghandslocation.helpinghandslocation.persistence.repositories;
-
-import com.helpinghandslocation.helpinghandslocation.persistence.entities.User;
-
-public interface UserRepository {
-    User findByUsername(String username);
-}

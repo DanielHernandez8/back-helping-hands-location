@@ -1,4 +1,4 @@
-package com.helpinghandslocation.helpinghandslocation.persistence.entities;
+package com.helpinghandslocation.helpinghandslocation.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -17,4 +17,7 @@ public class Type implements Serializable {
 
     @OneToMany(mappedBy = "type", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<User> users;
+
+    public Type(int i, String baño) {
+    }
 }

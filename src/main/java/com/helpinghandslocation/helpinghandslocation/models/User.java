@@ -1,26 +1,28 @@
-package com.helpinghandslocation.helpinghandslocation.persistence.entities;
+package com.helpinghandslocation.helpinghandslocation.models;
 
 import jakarta.persistence.*;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "user")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Para generar números autoincrementados
     private int id;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String username;
+    @Column(nullable = false)
     private String password;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
@@ -30,6 +32,9 @@ public class User implements UserDetails {
     @ManyToOne
     @JoinColumn(name = "type_id")
     private Type type;
+
+    public User(int i, String admin, String pwd, boolean b, boolean b1, boolean b2, boolean b3, Type particular) {
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
