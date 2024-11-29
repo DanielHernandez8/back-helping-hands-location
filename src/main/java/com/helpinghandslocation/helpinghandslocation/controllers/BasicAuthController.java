@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @CrossOrigin
 @RestController
 public class BasicAuthController {
@@ -17,15 +19,20 @@ public class BasicAuthController {
     private JwtTokenUtil jwtTokenUtil;
 
     @PostMapping(path = "/login")
-    public ResponseEntity<String> basicauth(UsernamePasswordAuthenticationToken upa) {
+    public ResponseEntity<Map<String, String>> basicauth(UsernamePasswordAuthenticationToken upa) {
+        // Validar que el principal exista
+        if (upa == null || upa.getPrincipal() == null) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Invalid authentication token"));
+        }
 
-        User u = (User) upa.getPrincipal();
+        // Extraer el usuario del principal
+        User user = (User) upa.getPrincipal();
 
+        // Generar el token JWT
+        final String token = jwtTokenUtil.generateToken(user.getUsername());
 
-        final String token = jwtTokenUtil.generateToken(u.getUsername());
-
-
-        return ResponseEntity.ok()
-                .body("{\"resp\":\"Login exitoso\", \"id\":" + u.getId() + ", \"token\":\"" + token + "\"}");
+        // Retornar solo el token en formato JSON
+        return ResponseEntity.ok(Map.of("token", token));
     }
 }
