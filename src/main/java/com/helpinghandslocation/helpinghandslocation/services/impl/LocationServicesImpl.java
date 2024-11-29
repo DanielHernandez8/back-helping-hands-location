@@ -7,7 +7,6 @@ import com.helpinghandslocation.helpinghandslocation.repositories.LocationReposi
 import com.helpinghandslocation.helpinghandslocation.repositories.TagRespository;
 import com.helpinghandslocation.helpinghandslocation.services.LocationServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -48,11 +47,12 @@ public class LocationServicesImpl implements LocationServices {
             location.getTags().add(tag);
         }
 
-        locationRepository.save(location);
+       locationRepository.save(location);
 
 //         Mapear la entidad de vuelta a un DTO para devolverlo
         LocationTagDTO responseDTO = new LocationTagDTO();
         responseDTO.setName(location.getName());
+        responseDTO.setId(location.getId());
         responseDTO.setLongitude(location.getLongitude());
         responseDTO.setLatitude(location.getLatitude());
         responseDTO.setTagIds(location.getTags().stream().map(Tag::getId).toList());

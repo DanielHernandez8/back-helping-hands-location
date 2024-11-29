@@ -30,11 +30,5 @@ public class Location implements Serializable {
     )
     private List<Tag> tags = new ArrayList<>();
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 }
