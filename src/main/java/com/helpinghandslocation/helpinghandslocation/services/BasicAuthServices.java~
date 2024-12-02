@@ -1,0 +1,4 @@
+package com.helpinghandslocation.helpinghandslocation.services;
+
+public interface BasicAuthServices {
+}
