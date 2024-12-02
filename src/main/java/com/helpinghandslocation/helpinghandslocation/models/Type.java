@@ -1,5 +1,6 @@
 package com.helpinghandslocation.helpinghandslocation.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ public class Type implements Serializable {
     private int id;
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "type", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<User> users;
 
