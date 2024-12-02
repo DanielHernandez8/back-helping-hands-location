@@ -7,32 +7,26 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
 @CrossOrigin
 @RestController
+@RequestMapping("/login")
 public class BasicAuthController {
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
-
-    @PostMapping(path = "/login")
-    public ResponseEntity<Map<String, String>> basicauth(UsernamePasswordAuthenticationToken upa) {
-        // Validar que el principal exista
-        if (upa == null || upa.getPrincipal() == null) {
-            return ResponseEntity.badRequest()
-                    .body(Map.of("error", "Invalid authentication token"));
+    
+    @PostMapping
+    public ResponseEntity<String> login(User user) {
+        try {
+            return ResponseEntity.status(200).body(jwtTokenUtil.generateToken(user.getUsername())); 
+        }catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-
-        // Extraer el usuario del principal
-        User user = (User) upa.getPrincipal();
-
-        // Generar el token JWT
-        final String token = jwtTokenUtil.generateToken(user.getUsername());
-
-        // Retornar solo el token en formato JSON
-        return ResponseEntity.ok(Map.of("token", token));
     }
 }
