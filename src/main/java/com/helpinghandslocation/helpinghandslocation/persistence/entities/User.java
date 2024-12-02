@@ -31,6 +31,20 @@ public class User implements UserDetails {
     @JoinColumn(name = "type_id")
     private Type type;
 
+    //Constructor
+    public User(String username, String password, boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired, boolean enabled, Type type) {
+        this.username = username;
+        this.password = password;
+        this.accountNonExpired = accountNonExpired;
+        this.accountNonLocked = accountNonLocked;
+        this.credentialsNonExpired = credentialsNonExpired;
+        this.enabled = enabled;
+        this.type = type;
+    }
+
+    //Constructor vacio
+    public User() {}
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // Devolvemos un ArrayList vacío porque nuestra app no tiene roles

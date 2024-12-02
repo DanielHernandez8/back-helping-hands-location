@@ -15,7 +15,7 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    @PostMapping
+    @PostMapping("/create")
     public User register(@RequestBody UserDTO userDTO) {
         User user = new User();
         Type type = new Type();
