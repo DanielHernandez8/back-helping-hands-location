@@ -20,10 +20,11 @@ public class LocationController {
     LocationServices locationServices;
 
     @PostMapping
-    public ResponseEntity<HttpStatusCode> saveLocations(@RequestBody LocationTagDTO locationTagDTO) {
+    public ResponseEntity<LocationTagDTO> saveLocations(@RequestBody LocationTagDTO locationTagDTO) {
         try {
-           locationServices.createLocation(locationTagDTO);
-            return ResponseEntity.status(HttpStatusCode.valueOf(201)).build();
+           LocationTagDTO l = locationServices.createLocation(locationTagDTO);
+            return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(l);
+            //ResponseEntity.status(HttpStatusCode.valueOf(201)).build();
         } catch (Exception e) {
             e.printStackTrace();
             return null;

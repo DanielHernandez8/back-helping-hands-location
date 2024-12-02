@@ -33,7 +33,7 @@ public class User implements UserDetails {
     @JoinColumn(name = "type_id")
     private Type type;
 
-    public User(int i, String admin, String pwd, boolean b, boolean b1, boolean b2, boolean b3, Type particular) {
+    public User(int id, String admin, String pwd, boolean b, boolean b1, boolean b2, boolean b3, Type particular) {
     }
 
     @Override
