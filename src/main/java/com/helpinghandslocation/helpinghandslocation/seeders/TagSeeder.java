@@ -2,7 +2,6 @@ package com.helpinghandslocation.helpinghandslocation.seeders;
 
 import com.helpinghandslocation.helpinghandslocation.models.Tag;
 import com.helpinghandslocation.helpinghandslocation.models.Type;
-import com.helpinghandslocation.helpinghandslocation.models.User;
 import com.helpinghandslocation.helpinghandslocation.repositories.TagRespository;
 import com.helpinghandslocation.helpinghandslocation.repositories.TypeRepository;
 import com.helpinghandslocation.helpinghandslocation.repositories.UserRepository;
