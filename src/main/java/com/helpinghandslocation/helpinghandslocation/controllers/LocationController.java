@@ -20,13 +20,16 @@ public class LocationController {
     LocationServices locationServices;
 
     @PostMapping
-    public ResponseEntity<LocationTagDTO> saveLocations(@RequestBody LocationTagDTO locationTagDTO) {
+    public ResponseEntity<?> saveLocations(@RequestBody LocationTagDTO locationTagDTO) {
         try {
-            return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(locationServices.createLocation(locationTagDTO));
-            //ResponseEntity.status(HttpStatusCode.valueOf(201)).build();
-        } catch (Exception e) {
+            LocationTagDTO saveLocation = locationServices.createLocation(locationTagDTO);
+            return ResponseEntity.status(201).body(saveLocation);
+        }catch (IllegalArgumentException e) {
+            return ResponseEntity.status(400).body("Error en los datos proporcionados " +e.getMessage());
+        }
+        catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return ResponseEntity.status(500).body("Error al crear la ubicación " +e.getMessage());
         }
     }
 }

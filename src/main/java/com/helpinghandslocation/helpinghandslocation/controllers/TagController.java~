@@ -19,13 +19,16 @@ public class TagController{
     @Autowired
     TagServices tagServices;
 
+
     @GetMapping
-    public ResponseEntity<List<Tag>> getTags() {
+    public ResponseEntity<?> getTags() {
         try{
         List<Tag> tags = tagServices.getTags();
         return ResponseEntity.status(200).body(tags);
-    } catch (RuntimeException e) {
-            throw new RuntimeException(e);
+    }catch (IllegalArgumentException e) {
+        return ResponseEntity.status(400).body("Error en los datos proporcionados " +e.getMessage());
+    }catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
         }
     }
 }

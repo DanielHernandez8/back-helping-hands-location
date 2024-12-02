@@ -19,13 +19,15 @@ public class TypeController {
     TypeServices typeServices;
 
     @GetMapping
-    public ResponseEntity<List<Type>> getTypes() {
+    public ResponseEntity<?> getTypes() {
         try{
             List<Type> type = typeServices.getTypes();
             return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(type);
-        }catch (Exception e) {
-            e.printStackTrace();
-            return null;
+        }catch (IllegalArgumentException e) {
+            return ResponseEntity.status(400).body("Error " +e.getMessage());
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al obtener los tipos " +e.getMessage());
         }
     }
     }
