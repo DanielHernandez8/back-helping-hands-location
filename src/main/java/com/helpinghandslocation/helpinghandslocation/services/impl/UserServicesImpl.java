@@ -26,14 +26,14 @@ public class UserServicesImpl implements UserServices {
         user.setPassword(encryptedPassword);
         user.setUsername(userDTO.getUsername().toLowerCase());
         user.setType(type);
-        user.setName(userDTO.getName());
-        user.setFirstName(userDTO.getFirstName());
         user.setEmail(userDTO.getEmail());
-        user.setAddress(userDTO.getAddress());
+        user.setPhoneNumber(userDTO.getPhoneNumber());
         user.setCountry(userDTO.getCountry());
+        user.setAddress(userDTO.getAddress());
         user.setCity(userDTO.getCity());
         user.setPostalCode(userDTO.getPostalCode());
-        user.setPhone(userDTO.getPhone());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
         user.setEnabled(true);
         user.setAccountNonExpired(true);
         user.setAccountNonLocked(true);

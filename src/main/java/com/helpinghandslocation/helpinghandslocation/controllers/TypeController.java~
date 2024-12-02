@@ -21,7 +21,7 @@ public class TypeController {
     @GetMapping
     public ResponseEntity<List<Type>> getTypes() {
         try{
-            typeServices.getTypes();
+            List<Type> type = typeServices.getTypes();
             return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(type);
         }catch (Exception e) {
             e.printStackTrace();
