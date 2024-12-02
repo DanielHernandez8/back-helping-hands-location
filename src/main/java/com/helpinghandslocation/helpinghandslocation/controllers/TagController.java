@@ -25,8 +25,8 @@ public class TagController{
         try{
         List<Tag> tags = tagServices.getTags();
         return ResponseEntity.status(200).body(tags);
-    }catch (IllegalArgumentException e) {
-        return ResponseEntity.status(400).body("Error " +e.getMessage());
+    }catch (IllegalStateException e) {
+        return ResponseEntity.badRequest().body("Error debes iniciar sesión " +e.getMessage());
     }catch (Exception e) {
             return ResponseEntity.status(500).body("Error al obtener las etiquetas " +e.getMessage());
         }
