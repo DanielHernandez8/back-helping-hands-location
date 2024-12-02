@@ -18,12 +18,27 @@ import java.util.Collection;
 @Table(name = "user")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Para generar números autoincrementados
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(unique = true, nullable = false)
     private String username;
     @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
+    private String email;
+    @Column(nullable = false)
+    private String name;
+    @Column(nullable = false)
+    private String firstName;
+    private String phone;
+    private String address;
+    @Column(nullable = false)
+    private String city;
+    @Column(nullable = false)
+    private String country;
+    @Column(nullable = false)
+    private String postalCode;
+
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;

@@ -18,19 +18,27 @@ public class UserServicesImpl implements UserServices {
 
 
     @Override
-    public User createUser( UserDTO userDTO) {
-        User u = new User();
+    public User createUser(UserDTO userDTO) {
+        User user = new User();
         Type type = new Type();
         type.setId(userDTO.getTypeId());
         String encryptedPassword = Encoder.passwordencoder().encode(userDTO.getPassword());
-        u.setPassword(encryptedPassword);
-        u.setUsername(userDTO.getUsername().toLowerCase());
-        u.setType(type);
-        u.setEnabled(true);
-        u.setAccountNonExpired(true);
-        u.setAccountNonLocked(true);
-        u.setCredentialsNonExpired(true);
-        User savedUser = userRepository.save(u);
+        user.setPassword(encryptedPassword);
+        user.setUsername(userDTO.getUsername().toLowerCase());
+        user.setType(type);
+        user.setName(userDTO.getName());
+        user.setFirstName(userDTO.getFirstName());
+        user.setEmail(userDTO.getEmail());
+        user.setAddress(userDTO.getAddress());
+        user.setCountry(userDTO.getCountry());
+        user.setCity(userDTO.getCity());
+        user.setPostalCode(userDTO.getPostalCode());
+        user.setPhone(userDTO.getPhone());
+        user.setEnabled(true);
+        user.setAccountNonExpired(userDTO.getAccountNonExpired());
+        user.setAccountNonLocked(true);
+        user.setCredentialsNonExpired(true);
+        User savedUser = userRepository.save(user);
         return savedUser;
     }
 }
