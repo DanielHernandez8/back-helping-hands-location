@@ -47,7 +47,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             }
         } else {
             logger.warn("El token JWT no comienza con 'Bearer '");
-            System.out.println("token" + requestTokenHeader);
         }
 
         // Una vez que obtenemos el username, validamos el token
