@@ -54,13 +54,13 @@ public class SecurityConfig {
                     try {
 
                         // Definimos que urls estarán desprotegidas y no necesitarán recibir las credenciales para poder ser accedidas
-                        requests.requestMatchers("/users/create","/types").permitAll().anyRequest().authenticated();
+                        requests.requestMatchers("/users/register","/types").permitAll().anyRequest().authenticated();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 })
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
-                .oauth2Login(withDefaults())  // Añadimos soporte para OAuth2 (login con Google)
+//                .oauth2Login(withDefaults())  // Añadimos soporte para OAuth2 (login con Google)
                 .httpBasic(withDefaults()); // Habilitamos autenticación básica (por si se necesita)
 
         return http.build();

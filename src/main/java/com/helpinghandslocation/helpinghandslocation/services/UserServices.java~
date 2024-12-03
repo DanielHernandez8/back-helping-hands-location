@@ -6,6 +6,4 @@ import com.helpinghandslocation.helpinghandslocation.models.User;
 
 public interface UserServices {
     User createUser(UserDTO userDTO);
-    CurrentUserDTO getCurrentUser();
-
 }

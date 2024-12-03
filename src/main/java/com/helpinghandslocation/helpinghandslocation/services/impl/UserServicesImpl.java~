@@ -58,6 +58,7 @@ public class UserServicesImpl implements UserServices {
             throw new IllegalStateException("Usuario no autenticado o tipo inesperado");
         }
     }
+    }
 }
 
 
