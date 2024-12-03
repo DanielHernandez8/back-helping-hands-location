@@ -35,6 +35,17 @@ public class TagSeeder implements CommandLineRunner {
             tagRespository.save(new Tag(2, "Luz"));
             tagRespository.save(new Tag(3, "Comida"));
             tagRespository.save(new Tag(4, "Ducha"));
+            tagRespository.save(new Tag(5,"Medicina"));
+            tagRespository.save(new Tag(6,"Cama"));
+            tagRespository.save(new Tag(7,"Ropa"));
+            tagRespository.save(new Tag(8,"Calefaccion"));
+            tagRespository.save(new Tag(9,"WiFi"));
+            tagRespository.save(new Tag(10,"Transporte"));
+            tagRespository.save(new Tag(11,"Primeros Auxilios"));
+            tagRespository.save(new Tag(12,"Zona de juego"));
+            tagRespository.save(new Tag(13,"Suministro de combustible"));
+            tagRespository.save(new Tag(14,"Herramientas"));
+            tagRespository.save(new Tag(15,"Cuidado de mascotas"));
 
 
             //aqui empieza los Type
