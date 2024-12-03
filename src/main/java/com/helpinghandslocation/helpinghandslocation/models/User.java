@@ -28,12 +28,11 @@ public class User implements UserDetails {
     private String email;
     @Column(nullable = false)
     private String firstName;
+    @Column(nullable = true)
     private String lastName;
+    @Column(nullable = true)
     private int phoneNumber;
-    private String address;
-    private String city;
-    private String country;
-    private int postalCode;
+
 
     private boolean accountNonExpired;
     private boolean accountNonLocked;
@@ -41,7 +40,7 @@ public class User implements UserDetails {
     private boolean enabled;
 
     @ManyToOne
-    @JoinColumn(name = "type_id")
+    @JoinColumn(name = "type_id", nullable = false)
     private Type type;
 
     public User(int id, String admin, String pwd, boolean b, boolean b1, boolean b2, boolean b3, Type particular) {
