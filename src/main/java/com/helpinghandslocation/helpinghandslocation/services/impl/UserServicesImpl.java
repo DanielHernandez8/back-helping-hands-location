@@ -28,10 +28,6 @@ public class UserServicesImpl implements UserServices {
         user.setType(type);
         user.setEmail(userDTO.getEmail());
         user.setPhoneNumber(userDTO.getPhoneNumber());
-        user.setCountry(userDTO.getCountry());
-        user.setAddress(userDTO.getAddress());
-        user.setCity(userDTO.getCity());
-        user.setPostalCode(userDTO.getPostalCode());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         user.setEnabled(true);
