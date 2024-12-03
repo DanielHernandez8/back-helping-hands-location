@@ -2,11 +2,13 @@ package com.helpinghandslocation.helpinghandslocation.seeders;
 
 import com.helpinghandslocation.helpinghandslocation.models.Tag;
 import com.helpinghandslocation.helpinghandslocation.models.Type;
+import com.helpinghandslocation.helpinghandslocation.models.User;
 import com.helpinghandslocation.helpinghandslocation.repositories.TagRespository;
 import com.helpinghandslocation.helpinghandslocation.repositories.TypeRepository;
 import com.helpinghandslocation.helpinghandslocation.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,6 +21,9 @@ public class TagSeeder implements CommandLineRunner {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -33,11 +38,33 @@ public class TagSeeder implements CommandLineRunner {
 
 
             //aqui empieza los Type
-            typeRepository.save(new Type(1, "Particular"));
+
+            Type particular = new Type(1, "Particular");
+            typeRepository.save(particular);
             typeRepository.save(new Type(2, "Comercio"));
 
             //user
 
+            if (userRepository.findByUsername("admin") == null) {
+
+                userRepository.save(new User(
+                    0,
+                    "admin",
+                    passwordEncoder.encode("12345"),
+                    "admin@example.com",
+                    "Admin",
+                    "User",
+                    123456789,
+                    true,
+                    true,
+                    true,
+                    true,
+                        particular
+
+
+            ));
+
         }
     }
+}
 }

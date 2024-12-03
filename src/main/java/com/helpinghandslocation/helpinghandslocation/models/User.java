@@ -2,6 +2,7 @@ package com.helpinghandslocation.helpinghandslocation.models;
 
 import jakarta.persistence.*;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import java.util.Collection;
 @Setter
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user")
 public class User implements UserDetails {
     @Id
@@ -43,8 +45,6 @@ public class User implements UserDetails {
     @JoinColumn(name = "type_id", nullable = false)
     private Type type;
 
-    public User(int id, String admin, String pwd, boolean b, boolean b1, boolean b2, boolean b3, Type particular) {
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
