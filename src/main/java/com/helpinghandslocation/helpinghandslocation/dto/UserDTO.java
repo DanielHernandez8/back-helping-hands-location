@@ -6,4 +6,5 @@ import lombok.Data;
 @Data
 public class UserDTO extends User {
     private int typeId;
+
 }

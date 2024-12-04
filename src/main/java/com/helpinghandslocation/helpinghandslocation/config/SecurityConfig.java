@@ -60,7 +60,7 @@ public class SecurityConfig {
                     }
                 })
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
-//                .oauth2Login(withDefaults())  // Añadimos soporte para OAuth2 (login con Google)
+                .oauth2Login(withDefaults())  // Añadimos soporte para OAuth2 (login con Google)
                 .httpBasic(withDefaults()); // Habilitamos autenticación básica (por si se necesita)
 
         return http.build();
