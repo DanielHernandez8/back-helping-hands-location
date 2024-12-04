@@ -1,9 +1,11 @@
-package com.helpinghandslocation.helpinghandslocation.dto;
+package com.helpinghandslocation.helpinghandslocation.dto.response;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class CurrentUserDTO {
+public class CurrentUserResponseDTO implements Serializable {
     private int id;
     private String username;
     private String email;

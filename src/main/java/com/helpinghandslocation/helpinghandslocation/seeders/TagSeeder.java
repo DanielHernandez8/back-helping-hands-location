@@ -6,6 +6,8 @@ import com.helpinghandslocation.helpinghandslocation.models.User;
 import com.helpinghandslocation.helpinghandslocation.repositories.TagRespository;
 import com.helpinghandslocation.helpinghandslocation.repositories.TypeRepository;
 import com.helpinghandslocation.helpinghandslocation.repositories.UserRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,35 +33,35 @@ public class TagSeeder implements CommandLineRunner {
         if (tagRespository.count() == 0) {
 
             //Aqui los Tag
-            tagRespository.save(new Tag(1, "Agua Potable"));
-            tagRespository.save(new Tag(2, "Luz"));
-            tagRespository.save(new Tag(3, "Comida"));
-            tagRespository.save(new Tag(4, "Ducha"));
-            tagRespository.save(new Tag(5,"Medicina"));
-            tagRespository.save(new Tag(6,"Cama"));
-            tagRespository.save(new Tag(7,"Ropa"));
-            tagRespository.save(new Tag(8,"Calefaccion"));
-            tagRespository.save(new Tag(9,"WiFi"));
-            tagRespository.save(new Tag(10,"Transporte"));
-            tagRespository.save(new Tag(11,"Primeros Auxilios"));
-            tagRespository.save(new Tag(12,"Zona de juego"));
-            tagRespository.save(new Tag(13,"Suministro de combustible"));
-            tagRespository.save(new Tag(14,"Herramientas"));
-            tagRespository.save(new Tag(15,"Cuidado de mascotas"));
+            tagRespository.save(new Tag(1L, "Agua Potable"));
+            tagRespository.save(new Tag(2L, "Luz"));
+            tagRespository.save(new Tag(3L, "Comida"));
+            tagRespository.save(new Tag(4L, "Ducha"));
+            tagRespository.save(new Tag(5L,"Medicina"));
+            tagRespository.save(new Tag(6L,"Cama"));
+            tagRespository.save(new Tag(7L,"Ropa"));
+            tagRespository.save(new Tag(8L,"Calefaccion"));
+            tagRespository.save(new Tag(9L,"WiFi"));
+            tagRespository.save(new Tag(10L,"Transporte"));
+            tagRespository.save(new Tag(11L,"Primeros Auxilios"));
+            tagRespository.save(new Tag(12L,"Zona de juego"));
+            tagRespository.save(new Tag(13L,"Suministro de combustible"));
+            tagRespository.save(new Tag(14L,"Herramientas"));
+            tagRespository.save(new Tag(15L,"Cuidado de mascotas"));
 
 
             //aqui empieza los Type
 
-            Type particular = new Type(1, "Particular");
+            Type particular = new Type(1L, "Particular");
             typeRepository.save(particular);
-            typeRepository.save(new Type(2, "Comercio"));
+            typeRepository.save(new Type(2L, "Comercio"));
 
             //user
 
             if (userRepository.findByUsername("admin") == null) {
 
                 userRepository.save(new User(
-                    0,
+                    1L,
                     "admin",
                     passwordEncoder.encode("12345"),
                     "admin@example.com",

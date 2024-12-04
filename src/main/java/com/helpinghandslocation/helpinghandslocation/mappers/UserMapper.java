@@ -1,6 +1,6 @@
-package com.helpinghandslocation.helpinghandslocation.services;
+package com.helpinghandslocation.helpinghandslocation.mappers;
 
-import com.helpinghandslocation.helpinghandslocation.dto.CurrentUserDTO;
+import com.helpinghandslocation.helpinghandslocation.dto.response.CurrentUserResponseDTO;
 import com.helpinghandslocation.helpinghandslocation.models.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -9,5 +9,5 @@ import org.mapstruct.Mapping;
 public interface UserMapper {
     // Método para convertir un User a un CurrentUserDTO
     @Mapping(source = "type.id", target = "typeId") // Mapear el campo tipo ID
-    CurrentUserDTO toCurrentUserDTO(User user);
+    CurrentUserResponseDTO toCurrentUserDTO(User user);
 }

@@ -1,11 +1,9 @@
 package com.helpinghandslocation.helpinghandslocation.controllers;
 
-import com.helpinghandslocation.helpinghandslocation.models.User;
+import com.helpinghandslocation.helpinghandslocation.dto.request.LoginRequestDTO;
 import com.helpinghandslocation.helpinghandslocation.utils.JwtTokenUtil;
-import org.antlr.v4.runtime.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +20,9 @@ public class BasicAuthController {
     private JwtTokenUtil jwtTokenUtil;
     
     @PostMapping
-    public ResponseEntity<?> login(User user) {
+    public ResponseEntity<?> login(LoginRequestDTO login) {
         try {
-            String token = jwtTokenUtil.generateToken(user.getUsername());
+            String token = jwtTokenUtil.generateToken(login.getUsername());
             return ResponseEntity.ok(Map.of("token", token));
         } catch (IllegalArgumentException e) {
                 return ResponseEntity.status(400).body("Error: Username o contraseña incorrectos "  + e.getMessage());

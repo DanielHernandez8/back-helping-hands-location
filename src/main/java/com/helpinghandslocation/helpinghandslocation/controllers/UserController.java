@@ -1,16 +1,14 @@
 package com.helpinghandslocation.helpinghandslocation.controllers;
 
-import com.helpinghandslocation.helpinghandslocation.dto.CurrentUserDTO;
+import com.helpinghandslocation.helpinghandslocation.dto.response.CurrentUserResponseDTO;
+import com.helpinghandslocation.helpinghandslocation.dto.response.TokenResponseDTO;
 import com.helpinghandslocation.helpinghandslocation.models.User;
-import com.helpinghandslocation.helpinghandslocation.dto.UserDTO;
+import com.helpinghandslocation.helpinghandslocation.dto.request.RegisterUserRequestDTO;
 import com.helpinghandslocation.helpinghandslocation.services.UserServices;
 import com.helpinghandslocation.helpinghandslocation.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -22,11 +20,12 @@ public class UserController {
     JwtTokenUtil jwtTokenUtil;
 
     @PostMapping("/register")
-    public ResponseEntity<?> saveUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<?> saveUser(@RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
         try {
-            User createdUser = userServices.createUser(userDTO);
+            User createdUser = userServices.createUser(registerUserRequestDTO);
             String token = jwtTokenUtil.generateToken(createdUser.getUsername());
-            return ResponseEntity.status(201).body(Map.of("token", token));
+//            return ResponseEntity.status(201).body(Map.of("token", token));
+            return ResponseEntity.status(201).body(TokenResponseDTO.builder().token(token).build());
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("Error al crear el usuario " + e.getMessage());
@@ -35,8 +34,8 @@ public class UserController {
     @GetMapping("/current-user")
     public ResponseEntity<?> getCurrentUser() {
         try {
-            CurrentUserDTO currentUserDTO = userServices.getCurrentUser();
-            return ResponseEntity.status(200).body(currentUserDTO);
+            CurrentUserResponseDTO currentUserResponseDTO = userServices.getCurrentUser();
+            return ResponseEntity.status(200).body(currentUserResponseDTO);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("Error al obtener el usuario: " + e.getMessage());
