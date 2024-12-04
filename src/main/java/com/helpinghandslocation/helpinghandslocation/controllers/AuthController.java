@@ -35,19 +35,6 @@ public class AuthController {
     @Value("${spring.security.oauth2.client.registration.google.client-id}")
     private String GOOGLE_CLIENT_ID;
 
-
-    @PostMapping("/register")
-    public ResponseEntity<?> saveUser(@RequestBody UserDTO userDTO) {
-        try {
-            User createdUser = userServices.createUser(userDTO);
-            String token = jwtTokenUtil.generateToken(createdUser.getUsername());
-            return ResponseEntity.status(201).body(Map.of("token", token));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body("Error al crear el usuario " + e.getMessage());
-        }
-    }
-
     @PostMapping ("/basic/login")
     public ResponseEntity<?> basicLogin(User user) {
         try {
