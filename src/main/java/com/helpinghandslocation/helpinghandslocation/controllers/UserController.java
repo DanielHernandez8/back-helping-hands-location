@@ -32,6 +32,7 @@ public class UserController {
             return ResponseEntity.status(500).body("Error al crear el usuario " + e.getMessage());
         }
     }
+    
     @GetMapping("/current-user")
     public ResponseEntity<?> getCurrentUser() {
         try {

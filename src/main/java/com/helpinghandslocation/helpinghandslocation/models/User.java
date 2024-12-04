@@ -33,7 +33,7 @@ public class User implements UserDetails {
     @Column(nullable = true)
     private String lastName;
     @Column(nullable = true)
-    private int phoneNumber;
+    private String phoneNumber;
 
 
     private boolean accountNonExpired;

@@ -1,8 +1,6 @@
 package com.helpinghandslocation.helpinghandslocation.seeders;
 
 import com.helpinghandslocation.helpinghandslocation.models.Tag;
-import com.helpinghandslocation.helpinghandslocation.models.Type;
-import com.helpinghandslocation.helpinghandslocation.models.User;
 import com.helpinghandslocation.helpinghandslocation.repositories.TagRespository;
 import com.helpinghandslocation.helpinghandslocation.repositories.TypeRepository;
 import com.helpinghandslocation.helpinghandslocation.repositories.UserRepository;
@@ -46,36 +44,7 @@ public class TagSeeder implements CommandLineRunner {
             tagRespository.save(new Tag(13,"Suministro de combustible"));
             tagRespository.save(new Tag(14,"Herramientas"));
             tagRespository.save(new Tag(15,"Cuidado de mascotas"));
-
-
-            //aqui empieza los Type
-
-            Type particular = new Type(1, "Particular");
-            typeRepository.save(particular);
-            typeRepository.save(new Type(2, "Comercio"));
-
-            //user
-
-            if (userRepository.findByUsername("admin") == null) {
-
-                userRepository.save(new User(
-                    0,
-                    "admin",
-                    passwordEncoder.encode("12345"),
-                    "admin@example.com",
-                    "Admin",
-                    "User",
-                    123456789,
-                    true,
-                    true,
-                    true,
-                    true,
-                        particular
-
-
-            ));
-
         }
     }
 }
-}
+
