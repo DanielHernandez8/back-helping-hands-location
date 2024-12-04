@@ -94,10 +94,10 @@ public class AuthController {
                     user.setLastName(lastName);
                     user.setUsername(email);
                     user.setPassword(Encoder.passwordencoder().encode("unused-password"));
-
-
-
-
+                    user.setAccountNonExpired(true);
+                    user.setAccountNonLocked(true);
+                    user.setCredentialsNonExpired(true);
+                    user.setEnabled(true);
                     userRepository.save(user);
                     return ResponseEntity.ok(Map.of(
                             "message", "User registered successfully",
