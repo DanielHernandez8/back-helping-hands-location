@@ -20,14 +20,15 @@ public class UserController {
     JwtTokenUtil jwtTokenUtil;
 
     @PostMapping("/register")
-    public ResponseEntity<TokenResponseDTO> saveUser(@RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
+    public ResponseEntity<?> saveUser(@RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
         try {
-            User createdUser = userServices.createUser(registerUserRequestDTO);  // Creación del usuario
-            String token = jwtTokenUtil.generateToken(createdUser.getUsername()); // Generación del JWT
-            return ResponseEntity.status(201).body(TokenResponseDTO.builder().token(token).build());  // Devolvemos el token en un DTO
+            User createdUser = userServices.createUser(registerUserRequestDTO);
+            String token = jwtTokenUtil.generateToken(createdUser.getUsername());
+//            return ResponseEntity.status(201).body(Map.of("token", token));
+            return ResponseEntity.status(201).body(TokenResponseDTO.builder().token(token).build());
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(500).body(TokenResponseDTO.builder().token("Error al crear el usuario").build());
+            return ResponseEntity.status(500).body("Error al crear el usuario " + e.getMessage());
         }
     }
     @GetMapping("/current-user")

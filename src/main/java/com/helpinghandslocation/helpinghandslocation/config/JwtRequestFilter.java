@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +21,7 @@ import java.io.IOException;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
-    private CustomUserDetailsService customUserDetailsService;  // Cambia a tu clase
+    private CustomUserDetailsService customUserDetailsService; // Cambia a tu clase de UserDetailsService
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
@@ -41,13 +42,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 // Extraemos el nombre de usuario del token
                 username = jwtTokenUtil.getUsernameFromToken(jwtToken);
             } catch (IllegalArgumentException e) {
-                System.out.println("No se pudo obtener el token JWT");
+                throw new AuthenticationServiceException("No se pudo obtener el token JWT.");
             } catch (ExpiredJwtException e) {
-                System.out.println("El token JWT ha expirado");
+                throw new AuthenticationServiceException("El token JWT ha expirado.");
             }
-        } else {
-            logger.warn("El token JWT no comienza con 'Bearer '");
-            System.out.println("token" + requestTokenHeader);
+        } else if (requestTokenHeader != null) {
+            throw new AuthenticationServiceException("El token JWT no comienza con 'Bearer '.");
         }
 
         // Una vez que obtenemos el username, validamos el token
@@ -65,6 +65,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
                 // Establecemos la autenticación en el contexto de seguridad
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            } else {
+                throw new AuthenticationServiceException("El token JWT no es válido.");
             }
         }
 
