@@ -6,7 +6,9 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 import com.helpinghandslocation.helpinghandslocation.config.Encoder;
 import com.helpinghandslocation.helpinghandslocation.dto.request.RegisterUserRequestDTO;
+import com.helpinghandslocation.helpinghandslocation.models.Type;
 import com.helpinghandslocation.helpinghandslocation.models.User;
+import com.helpinghandslocation.helpinghandslocation.repositories.TypeRepository;
 import com.helpinghandslocation.helpinghandslocation.repositories.UserRepository;
 import com.helpinghandslocation.helpinghandslocation.services.AuthServices;
 import com.helpinghandslocation.helpinghandslocation.services.UserServices;
@@ -30,11 +32,11 @@ public class AuthServicesImpl implements AuthServices {
     @Value("${spring.security.oauth2.client.registration.google.client-id}")
     private String GOOGLE_CLIENT_ID;
 
-    @Autowired
-    private UserServices userServices;
-
     @Autowired 
     private UserRepository userRepository;
+
+    @Autowired
+    private TypeRepository typeRepository;
 
     @Override
     public ResponseEntity<Map<String, String>> handleGoogleAuth(String token) throws GeneralSecurityException, IOException {
@@ -66,12 +68,32 @@ public class AuthServicesImpl implements AuthServices {
                 userDTO.setLastName(lastName);
                 userDTO.setUsername(email);
                 userDTO.setPassword(Encoder.passwordencoder().encode("unused-password"));
-                user = userServices.createUser(userDTO);
+                user = this.createUser(userDTO);
             } 
             token = jwtTokenUtil.generateToken(user.getUsername());
             return ResponseEntity.ok(Map.of("token", token));
         } else {
             return ResponseEntity.status(401).body(Map.of("Error","Invalid token"));
         }
+    }
+
+    @Override
+    public User createUser(RegisterUserRequestDTO registerUserRequestDTO) {
+        User user = new User();
+        Type type = typeRepository.findById(registerUserRequestDTO.getTypeId()).orElse(null);
+        String encryptedPassword = Encoder.passwordencoder().encode(registerUserRequestDTO.getPassword());
+        user.setPassword(encryptedPassword);
+        user.setUsername(registerUserRequestDTO.getUsername().toLowerCase());
+        user.setType(type);
+        user.setEmail(registerUserRequestDTO.getEmail());
+        user.setPhoneNumber(registerUserRequestDTO.getPhoneNumber());
+        user.setFirstName(registerUserRequestDTO.getFirstName());
+        user.setLastName(registerUserRequestDTO.getLastName());
+        user.setEnabled(true);
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setCredentialsNonExpired(true);
+        User savedUser = userRepository.save(user);
+        return savedUser;
     }
 }

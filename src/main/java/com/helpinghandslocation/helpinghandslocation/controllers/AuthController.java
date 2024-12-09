@@ -3,7 +3,6 @@ package com.helpinghandslocation.helpinghandslocation.controllers;
 import com.helpinghandslocation.helpinghandslocation.dto.request.LoginRequestDTO;
 import com.helpinghandslocation.helpinghandslocation.dto.request.RegisterUserRequestDTO;
 import com.helpinghandslocation.helpinghandslocation.models.User;
-import com.helpinghandslocation.helpinghandslocation.repositories.UserRepository;
 import com.helpinghandslocation.helpinghandslocation.services.AuthServices;
 import com.helpinghandslocation.helpinghandslocation.services.UserServices;
 import com.helpinghandslocation.helpinghandslocation.utils.JwtTokenUtil;
@@ -23,9 +22,6 @@ public class AuthController {
 
     @Autowired
     UserServices userServices;
-
-    @Autowired
-    UserRepository userRepository;
     
     @Autowired
     AuthServices authServices;
@@ -45,7 +41,7 @@ public class AuthController {
     @PostMapping ("/basic/register")
     public ResponseEntity<?> basicRegister(@RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
         try {
-            User createdUser = userServices.createUser(registerUserRequestDTO);
+            User createdUser = authServices.createUser(registerUserRequestDTO);
             String token = jwtTokenUtil.generateToken(createdUser.getUsername());
             return ResponseEntity.status(201).body(Map.of("token", token));
         } catch (Exception e) {

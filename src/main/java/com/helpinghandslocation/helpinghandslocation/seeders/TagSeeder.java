@@ -16,15 +16,6 @@ public class TagSeeder implements CommandLineRunner {
     @Autowired
     TagRespository tagRespository;
 
-    @Autowired
-    TypeRepository typeRepository;
-
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
 
     @Override
     public void run(String... args) throws Exception {

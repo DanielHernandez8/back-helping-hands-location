@@ -7,7 +7,7 @@ import com.helpinghandslocation.helpinghandslocation.models.Type;
 import com.helpinghandslocation.helpinghandslocation.models.User;
 import com.helpinghandslocation.helpinghandslocation.repositories.TypeRepository;
 import com.helpinghandslocation.helpinghandslocation.repositories.UserRepository;
-import com.helpinghandslocation.helpinghandslocation.services.UserMapper;
+import com.helpinghandslocation.helpinghandslocation.mappers.UserMapper;
 import com.helpinghandslocation.helpinghandslocation.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;

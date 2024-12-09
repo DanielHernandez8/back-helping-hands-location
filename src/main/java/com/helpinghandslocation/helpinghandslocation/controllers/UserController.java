@@ -16,20 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     UserServices userServices;
-    @Autowired
-    JwtTokenUtil jwtTokenUtil;
 
-    @PostMapping("/register")
-    public ResponseEntity<TokenResponseDTO> saveUser(@RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
-        try {
-            User createdUser = userServices.createUser(registerUserRequestDTO);  // Creación del usuario
-            String token = jwtTokenUtil.generateToken(createdUser.getUsername()); // Generación del JWT
-            return ResponseEntity.status(201).body(TokenResponseDTO.builder().token(token).build());  // Devolvemos el token en un DTO
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body(TokenResponseDTO.builder().token("Error al crear el usuario").build());
-        }
-    }
     @GetMapping("/current-user")
     public ResponseEntity<?> getCurrentUser() {
         try {

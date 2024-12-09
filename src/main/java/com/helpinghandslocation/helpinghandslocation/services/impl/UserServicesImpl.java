@@ -24,27 +24,6 @@ public class UserServicesImpl implements UserServices {
     @Autowired
     private UserMapper userMapper;
 
-
-    @Override
-    public User createUser(RegisterUserRequestDTO registerUserRequestDTO) {
-        User user = new User();
-        Type type = typeRepository.findById(registerUserRequestDTO.getTypeId()).orElse(null);
-        String encryptedPassword = Encoder.passwordencoder().encode(registerUserRequestDTO.getPassword());
-        user.setPassword(encryptedPassword);
-        user.setUsername(registerUserRequestDTO.getUsername().toLowerCase());
-        user.setType(type);
-        user.setEmail(registerUserRequestDTO.getEmail());
-        user.setPhoneNumber(registerUserRequestDTO.getPhoneNumber());
-        user.setFirstName(registerUserRequestDTO.getFirstName());
-        user.setLastName(registerUserRequestDTO.getLastName());
-        user.setEnabled(true);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
-        User savedUser = userRepository.save(user);
-        return savedUser;
-    }
-
     @Override
     public CurrentUserResponseDTO getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
