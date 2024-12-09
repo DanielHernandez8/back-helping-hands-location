@@ -14,19 +14,18 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 @Table(name = "tag")
 public class Tag implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String name;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "tags", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Location> locations = new ArrayList<>();
 
-    public Tag(Integer id, String name) {
-        this.id = id;
-        this.name = name;
+    public Tag(long id, String name) {
     }
 }

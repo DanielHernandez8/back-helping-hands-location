@@ -22,22 +22,24 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SecurityConfig {
 
     @Value("${app.local-domain-front}")
-    private String localDomainFront;
+    private String localDomainFront; // Cargar dominio permitido desde properties o YAML
 
     @Autowired
-    private JwtRequestFilter jwtRequestFilter;
+    private JwtRequestFilter jwtRequestFilter; // Filtro para autenticación JWT
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService; // Servicio de usuario personalizado
 
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder; // Encoder para contraseñas
 
+    // Configurar el AuthenticationManager para usar el servicio de usuarios y codificación
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
 
+    // Bean para AuthenticationManager (usado para autenticar usuarios manualmente si es necesario)
     @Bean
     AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder)
             throws Exception {
@@ -46,34 +48,36 @@ public class SecurityConfig {
         return authenticationManager.build();
     }
 
+    // Configuración de seguridad HTTP
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable()) // Deshabilitamos la protección contra ataques CSRF
-                .cors(withDefaults())
+        http.csrf(csrf -> csrf.disable()) // Deshabilitar CSRF (recomendado solo si tienes control del front)
+                .cors(withDefaults()) // Habilitar CORS con configuración personalizada
                 .authorizeHttpRequests((requests) -> {
                     try {
-
-                        // Definimos que urls estarán desprotegidas y no necesitarán recibir las credenciales para poder ser accedidas
-                        requests.requestMatchers("/auth/google", "/types", "auth/basic/register").permitAll().anyRequest().authenticated();
+                        // Rutas públicas sin autenticación
+                        requests.requestMatchers("/users/register", "/types", "/swagger-ui/**")
+                                .permitAll()
+                                .anyRequest()
+                                .authenticated(); // Cualquier otra ruta requiere autenticación
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 })
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
-                .oauth2Login(withDefaults())  // Añadimos soporte para OAuth2 (login con Google)
-                .httpBasic(withDefaults()); // Habilitamos autenticación básica (por si se necesita)
-
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); // Añadir filtro JWT antes del filtro estándar
         return http.build();
     }
 
-    // Configuración del CORS (Cross-origin resource sharing)
+    // Configuración de CORS para permitir peticiones desde el frontend
     @Bean
     WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins(localDomainFront);
-                registry.addMapping("/**").allowedMethods("POST", "PUT", "GET", "DELETE", "OPTIONS");
+                registry.addMapping("/**") // Todas las rutas
+                        .allowedOrigins(localDomainFront) // Origen permitido desde la configuración
+                        .allowedMethods("POST", "PUT", "GET", "DELETE", "OPTIONS") // Métodos HTTP permitidos
+                        .allowCredentials(true); // Permitir envío de cookies
             }
         };
     }

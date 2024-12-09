@@ -4,6 +4,8 @@ import com.helpinghandslocation.helpinghandslocation.models.Tag;
 import com.helpinghandslocation.helpinghandslocation.repositories.TagRespository;
 import com.helpinghandslocation.helpinghandslocation.repositories.TypeRepository;
 import com.helpinghandslocation.helpinghandslocation.repositories.UserRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;

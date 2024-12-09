@@ -1,8 +1,8 @@
 package com.helpinghandslocation.helpinghandslocation.services.impl;
 
 import com.helpinghandslocation.helpinghandslocation.config.Encoder;
-import com.helpinghandslocation.helpinghandslocation.dto.CurrentUserDTO;
-import com.helpinghandslocation.helpinghandslocation.dto.UserDTO;
+import com.helpinghandslocation.helpinghandslocation.dto.response.CurrentUserResponseDTO;
+import com.helpinghandslocation.helpinghandslocation.dto.request.RegisterUserRequestDTO;
 import com.helpinghandslocation.helpinghandslocation.models.Type;
 import com.helpinghandslocation.helpinghandslocation.models.User;
 import com.helpinghandslocation.helpinghandslocation.repositories.TypeRepository;
@@ -26,17 +26,17 @@ public class UserServicesImpl implements UserServices {
 
 
     @Override
-    public User createUser(UserDTO userDTO) {
+    public User createUser(RegisterUserRequestDTO registerUserRequestDTO) {
         User user = new User();
-        Type type = typeRepository.findById(userDTO.getTypeId()).orElse(null);
-        String encryptedPassword = Encoder.passwordencoder().encode(userDTO.getPassword());
+        Type type = typeRepository.findById(registerUserRequestDTO.getTypeId()).orElse(null);
+        String encryptedPassword = Encoder.passwordencoder().encode(registerUserRequestDTO.getPassword());
         user.setPassword(encryptedPassword);
-        user.setUsername(userDTO.getUsername().toLowerCase());
+        user.setUsername(registerUserRequestDTO.getUsername().toLowerCase());
         user.setType(type);
-        user.setEmail(userDTO.getEmail());
-        user.setPhoneNumber(userDTO.getPhoneNumber());
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
+        user.setEmail(registerUserRequestDTO.getEmail());
+        user.setPhoneNumber(registerUserRequestDTO.getPhoneNumber());
+        user.setFirstName(registerUserRequestDTO.getFirstName());
+        user.setLastName(registerUserRequestDTO.getLastName());
         user.setEnabled(true);
         user.setAccountNonExpired(true);
         user.setAccountNonLocked(true);
@@ -46,7 +46,7 @@ public class UserServicesImpl implements UserServices {
     }
 
     @Override
-    public CurrentUserDTO getCurrentUser() {
+    public CurrentUserResponseDTO getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal instanceof User) {
@@ -57,7 +57,6 @@ public class UserServicesImpl implements UserServices {
         } else {
             throw new IllegalStateException("Usuario no autenticado o tipo inesperado");
         }
-    }
     }
 }
 
