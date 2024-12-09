@@ -18,7 +18,7 @@ public class RegisterUserRequestDTO implements Serializable {
     @Column(nullable = true)
     private String lastName;
     @Column(nullable = true)
-    private String phoneNumber;
+    private int phoneNumber;
 
     private boolean accountNonExpired;
     private boolean accountNonLocked;

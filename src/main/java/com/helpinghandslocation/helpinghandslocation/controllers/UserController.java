@@ -5,6 +5,7 @@ import com.helpinghandslocation.helpinghandslocation.dto.response.TokenResponseD
 import com.helpinghandslocation.helpinghandslocation.models.User;
 import com.helpinghandslocation.helpinghandslocation.dto.request.RegisterUserRequestDTO;
 import com.helpinghandslocation.helpinghandslocation.services.UserServices;
+import com.helpinghandslocation.helpinghandslocation.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

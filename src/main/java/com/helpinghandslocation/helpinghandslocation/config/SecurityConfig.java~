@@ -61,7 +61,7 @@ public class SecurityConfig {
                                 .anyRequest()
                                 .authenticated(); // Cualquier otra ruta requiere autenticación
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        e.printStackTrace()
                     }
                 })
                 //.oauth2Login(withDefaults())  // Añadimos soporte para OAuth2 (login con Google)
