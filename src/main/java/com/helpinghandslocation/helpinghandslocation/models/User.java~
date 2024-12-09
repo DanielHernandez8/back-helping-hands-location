@@ -54,11 +54,6 @@ public class User implements UserDetails {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
-        this.accountNonExpired = b;
-        this.accountNonLocked = b1;
-        this.credentialsNonExpired = b2;
-        this.enabled = b3;
-        this.type = particular;
     }
 
 

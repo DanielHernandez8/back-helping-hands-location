@@ -1,14 +1,17 @@
 package com.helpinghandslocation.helpinghandslocation.dto;
 
-import com.helpinghandslocation.helpinghandslocation.models.Location;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
 @Setter
-public class LocationTagDTO extends Location {
-    private List<Integer>tagIds;
+public class LocationTagDTO implements Serializable {
+    private Long id;
+    private String name;
+    private double latitude;
+    private double longitude;
+    private List<Long>tagIds;
 }

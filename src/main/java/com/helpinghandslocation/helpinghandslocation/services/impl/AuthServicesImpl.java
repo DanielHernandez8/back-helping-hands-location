@@ -5,7 +5,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 import com.helpinghandslocation.helpinghandslocation.config.Encoder;
-import com.helpinghandslocation.helpinghandslocation.dto.UserDTO;
+import com.helpinghandslocation.helpinghandslocation.dto.request.RegisterUserRequestDTO;
 import com.helpinghandslocation.helpinghandslocation.models.User;
 import com.helpinghandslocation.helpinghandslocation.repositories.UserRepository;
 import com.helpinghandslocation.helpinghandslocation.services.AuthServices;
@@ -60,7 +60,7 @@ public class AuthServicesImpl implements AuthServices {
             User user = userRepository.findByUsername(email);
 
             if (user == null) {
-                UserDTO userDTO = new UserDTO();
+                RegisterUserRequestDTO userDTO = new RegisterUserRequestDTO();
                 userDTO.setEmail(email);
                 userDTO.setFirstName(firstName);
                 userDTO.setLastName(lastName);

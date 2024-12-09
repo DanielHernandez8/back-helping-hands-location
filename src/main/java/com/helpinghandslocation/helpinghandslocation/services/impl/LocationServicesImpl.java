@@ -42,20 +42,20 @@ public class LocationServicesImpl implements LocationServices {
         location.setLatitude(locationTagDTO.getLatitude());
         location.setLongitude(locationTagDTO.getLongitude());
 
-        for (Integer tagId : locationTagDTO.getTagIds()) {
+        for (Long tagId : locationTagDTO.getTagIds()) {
             Tag tag = tagRespository.findById(tagId).orElse(null);
             location.getTags().add(tag);
         }
 
-       locationRepository.save(location);
+       Location locationTarget = locationRepository.save(location);
 
 //         Mapear la entidad de vuelta a un DTO para devolverlo
         LocationTagDTO responseDTO = new LocationTagDTO();
-        responseDTO.setName(location.getName());
-        responseDTO.setId(location.getId());
-        responseDTO.setLongitude(location.getLongitude());
-        responseDTO.setLatitude(location.getLatitude());
-        responseDTO.setTagIds(location.getTags().stream().map(Tag::getId).toList());
+        responseDTO.setName(locationTarget.getName());
+        responseDTO.setId(locationTarget.getId());
+        responseDTO.setLongitude(locationTarget.getLongitude());
+        responseDTO.setLatitude(locationTarget.getLatitude());
+        responseDTO.setTagIds(locationTarget.getTags().stream().map(Tag::getId).toList());
         return responseDTO;
     }
 }

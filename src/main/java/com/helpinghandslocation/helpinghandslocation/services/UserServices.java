@@ -1,11 +1,11 @@
 package com.helpinghandslocation.helpinghandslocation.services;
 
-import com.helpinghandslocation.helpinghandslocation.dto.UserDTO;
-import com.helpinghandslocation.helpinghandslocation.dto.CurrentUserDTO;
+import com.helpinghandslocation.helpinghandslocation.dto.request.RegisterUserRequestDTO;
+import com.helpinghandslocation.helpinghandslocation.dto.response.CurrentUserResponseDTO;
 import com.helpinghandslocation.helpinghandslocation.models.User;
 
 public interface UserServices {
-    User createUser(UserDTO userDTO);
-    CurrentUserDTO getCurrentUser();
+    User createUser(RegisterUserRequestDTO registerUserRequestDTO);
+    CurrentUserResponseDTO getCurrentUser();
 
 }
