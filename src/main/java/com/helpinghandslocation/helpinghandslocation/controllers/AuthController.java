@@ -1,5 +1,6 @@
 package com.helpinghandslocation.helpinghandslocation.controllers;
 
+import com.helpinghandslocation.helpinghandslocation.dto.request.LoginRequestDTO;
 import com.helpinghandslocation.helpinghandslocation.dto.request.RegisterUserRequestDTO;
 import com.helpinghandslocation.helpinghandslocation.models.User;
 import com.helpinghandslocation.helpinghandslocation.repositories.UserRepository;
@@ -30,9 +31,9 @@ public class AuthController {
     AuthServices authServices;
 
     @PostMapping ("/basic/login")
-    public ResponseEntity<?> basicLogin(User user) {
+    public ResponseEntity<?> basicLogin(LoginRequestDTO loginRequestDTO) {
         try {
-            String token = jwtTokenUtil.generateToken(user.getUsername());
+            String token = jwtTokenUtil.generateToken(loginRequestDTO.getUsername());
             return ResponseEntity.ok(Map.of("token", token));
         } catch (IllegalArgumentException e) {
                 return ResponseEntity.status(400).body("Error: Username o contraseña incorrectos "  + e.getMessage());
