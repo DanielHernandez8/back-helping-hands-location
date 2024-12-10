@@ -22,7 +22,7 @@ public class Tag implements Serializable {
     private String name;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "tags", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "tags", fetch = FetchType.EAGER)
     private List<Location> locations = new ArrayList<>();
 
     public Tag(long id, String name) {
