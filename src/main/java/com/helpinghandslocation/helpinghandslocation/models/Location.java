@@ -22,7 +22,7 @@ public class Location implements Serializable {
     private double latitude;
     private double longitude;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "location_tags",
             joinColumns = @JoinColumn(name = "location_id"),

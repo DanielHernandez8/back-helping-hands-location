@@ -26,5 +26,7 @@ public class Tag implements Serializable {
     private List<Location> locations = new ArrayList<>();
 
     public Tag(long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 }
