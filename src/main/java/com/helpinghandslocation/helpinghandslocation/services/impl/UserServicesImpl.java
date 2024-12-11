@@ -41,7 +41,10 @@ public class UserServicesImpl implements UserServices {
     @Override
     public User createUser(RegisterUserRequestDTO registerUserRequestDTO) {
         User user = new User();
-        Type type = typeRepository.findById(registerUserRequestDTO.getTypeId()).orElse(null);
+        Type type = null;
+        if(registerUserRequestDTO.getTypeId() != null){
+            type = typeRepository.findById(registerUserRequestDTO.getTypeId()).orElse(null);
+        }
         String encryptedPassword = Encoder.passwordencoder().encode(registerUserRequestDTO.getPassword());
         user.setPassword(encryptedPassword);
         user.setUsername(registerUserRequestDTO.getUsername().toLowerCase());

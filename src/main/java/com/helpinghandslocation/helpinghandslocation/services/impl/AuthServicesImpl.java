@@ -38,6 +38,10 @@ public class AuthServicesImpl implements AuthServices {
     @Autowired
     private UserServices userServices;
 
+    @Autowired
+    private TypeRepository typeRepository;
+
+    @SuppressWarnings("deprecation")
     @Override
     public ResponseEntity<Map<String, String>> handleGoogleAuth(String token) throws GeneralSecurityException, IOException {
 
@@ -63,11 +67,15 @@ public class AuthServicesImpl implements AuthServices {
 
             if (user == null) {
                 RegisterUserRequestDTO userDTO = new RegisterUserRequestDTO();
+
                 userDTO.setEmail(email);
                 userDTO.setFirstName(firstName);
                 userDTO.setLastName(lastName);
                 userDTO.setUsername(email);
                 userDTO.setPassword(Encoder.passwordencoder().encode("unused-password"));
+                userDTO.setPhoneNumber(null);
+                userDTO.setTypeId(null);
+
                 user = userServices.createUser(userDTO);
             } 
             token = jwtTokenUtil.generateToken(user.getUsername());
