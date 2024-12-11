@@ -21,7 +21,7 @@ public class AuthController {
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    UserServices userServices;
+    private UserServices userServices;
     
     @Autowired
     AuthServices authServices;
@@ -41,7 +41,7 @@ public class AuthController {
     @PostMapping ("/basic/register")
     public ResponseEntity<?> basicRegister(@RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
         try {
-            User createdUser = authServices.createUser(registerUserRequestDTO);
+            User createdUser = userServices.createUser(registerUserRequestDTO);
             String token = jwtTokenUtil.generateToken(createdUser.getUsername());
             return ResponseEntity.status(201).body(Map.of("token", token));
         } catch (Exception e) {

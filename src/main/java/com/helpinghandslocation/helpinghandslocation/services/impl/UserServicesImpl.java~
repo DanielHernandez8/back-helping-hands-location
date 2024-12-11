@@ -24,7 +24,19 @@ public class UserServicesImpl implements UserServices {
     @Autowired
     private UserMapper userMapper;
 
+    @Override
+    public CurrentUserResponseDTO getCurrentUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        if (principal instanceof User) {
+            User user = (User) principal;
+
+            // Usar el mapper para convertir User a CurrentUserDTO
+            return userMapper.toCurrentUserDTO(user);
+        } else {
+            throw new IllegalStateException("Usuario no autenticado o tipo inesperado");
+        }
+    }
     @Override
     public User createUser(RegisterUserRequestDTO registerUserRequestDTO) {
         User user = new User();
@@ -45,19 +57,7 @@ public class UserServicesImpl implements UserServices {
         return savedUser;
     }
 
-    @Override
-    public CurrentUserResponseDTO getCurrentUser() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if (principal instanceof User) {
-            User user = (User) principal;
-
-            // Usar el mapper para convertir User a CurrentUserDTO
-            return userMapper.toCurrentUserDTO(user);
-        } else {
-            throw new IllegalStateException("Usuario no autenticado o tipo inesperado");
-        }
-    }
 }
 
 
