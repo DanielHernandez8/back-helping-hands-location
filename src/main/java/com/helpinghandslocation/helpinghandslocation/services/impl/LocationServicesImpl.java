@@ -32,6 +32,7 @@ public class LocationServicesImpl implements LocationServices {
         location.setName(locationTagDTO.getName());
         location.setLatitude(locationTagDTO.getLatitude());
         location.setLongitude(locationTagDTO.getLongitude());
+        location.setAddress(locationTagDTO.getAddress());
 
         // Asociar los tags
         for (Long tagId : locationTagDTO.getTagIds()) {

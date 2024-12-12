@@ -13,5 +13,6 @@ public class LocationTagDTO implements Serializable {
     private String name;
     private double latitude;
     private double longitude;
+    private String address;
     private List<Long>tagIds;
 }
