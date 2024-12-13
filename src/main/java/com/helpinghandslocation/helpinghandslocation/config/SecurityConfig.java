@@ -57,9 +57,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests((requests) -> {
                     try {
                         // Rutas públicas sin autenticación
-                        requests.requestMatchers(HttpMethod.GET, "/locations")
+                        requests.requestMatchers(HttpMethod.GET, "/locations", "/tags", "/types")
                                 .permitAll()
-                                .requestMatchers("/auth/google", "/types", "auth/basic/register", "/swagger-ui/**", "auth/basic/login", "/v3/api-docs/**","/v2/api-docs/**","/webjars/**")
+                                .requestMatchers("/auth/google", "auth/basic/register", "/swagger-ui/**", "auth/basic/login", "/v3/api-docs/**","/v2/api-docs/**","/webjars/**")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated(); // Cualquier otra ruta requiere autenticación
