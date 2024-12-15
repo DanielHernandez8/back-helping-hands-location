@@ -104,4 +104,9 @@ public class LocationServicesImpl implements LocationServices {
 
         return location;
     }
+
+    @Override
+    public List<Location> getLocationsByTagIdsAll(List<Long> tagIds) {
+        return locationRepository.findByTagsIdInAll(tagIds);
+    }
 }
