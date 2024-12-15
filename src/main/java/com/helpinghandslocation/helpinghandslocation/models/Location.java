@@ -15,6 +15,17 @@ import java.util.List;
 @Setter
 @Table(name = "location")
 public class Location implements Serializable {
+    public Location(long id, String name, double latitude, double longitude, String address) {
+        this.id = id;
+        this.name=name;
+        this.latitude=latitude;
+        this.longitude=longitude;
+        this.address=address;
+    }
+
+    public Location() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
