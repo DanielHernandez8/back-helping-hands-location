@@ -2,11 +2,13 @@ package com.helpinghandslocation.helpinghandslocation.controllers;
 
 import com.helpinghandslocation.helpinghandslocation.dto.LocationTagDTO;
 import com.helpinghandslocation.helpinghandslocation.services.LocationServices;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;
-
 
 @RestController
 @CrossOrigin
@@ -44,14 +46,18 @@ public class LocationController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getLocations() {
+    public ResponseEntity<?> getLocations(@RequestParam(required = false) List<Long> tagIds) {
         try {
-            return ResponseEntity.status(200).body(locationServices.getLocations());
+            if(tagIds ==null || tagIds.isEmpty()){
+                return ResponseEntity.status(200).body(locationServices.getLocations());
+            }
+            return ResponseEntity.status(200).body(locationServices.getLocationsByTagIdsAll(tagIds));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("Error al obtener las ubicaciones " + e.getMessage());
         }
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateLocation(@PathVariable Long id, @RequestBody LocationTagDTO locationTagDTO) {

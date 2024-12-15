@@ -13,4 +13,6 @@ public interface LocationServices {
     LocationTagDTO updateLocation(Long id,LocationTagDTO locationTagDTO);
 
     Location deleteLocation(Long id);
+
+    List<Location> getLocationsByTagIdsAll(List<Long> tagIds);
 }
