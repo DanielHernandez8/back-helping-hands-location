@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -56,7 +57,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests((requests) -> {
                     try {
                         // Rutas públicas sin autenticación
-                        requests.requestMatchers("/auth/google", "/types", "auth/basic/register", "/swagger-ui/**", "auth/basic/login", "/v3/api-docs/**","/v2/api-docs/**","/webjars/**")
+                        requests.requestMatchers(HttpMethod.GET, "/locations", "/tags", "/types")
+                                .permitAll()
+                                .requestMatchers("/auth/google", "auth/basic/register", "/swagger-ui/**", "auth/basic/login", "/v3/api-docs/**","/v2/api-docs/**","/webjars/**")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated(); // Cualquier otra ruta requiere autenticación

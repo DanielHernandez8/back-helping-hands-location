@@ -10,6 +10,4 @@ import java.util.Map;
 
 public interface AuthServices {
     ResponseEntity<Map<String, String>> handleGoogleAuth(String token) throws GeneralSecurityException, IOException;
-    User createUser(RegisterUserRequestDTO registerUserRequestDTO);
-
 }

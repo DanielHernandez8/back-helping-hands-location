@@ -25,6 +25,6 @@ public class RegisterUserRequestDTO implements Serializable {
     private boolean credentialsNonExpired;
     private boolean enabled;
 
-
+    @Column(nullable = true)
     private Long typeId;
 }

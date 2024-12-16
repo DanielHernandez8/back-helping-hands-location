@@ -32,16 +32,12 @@ public class AuthServicesImpl implements AuthServices {
     @Value("${spring.security.oauth2.client.registration.google.client-id}")
     private String GOOGLE_CLIENT_ID;
 
-    @Autowired
+    @Autowired 
     private UserRepository userRepository;
-
-    @Autowired
-    private UserServices userServices;
 
     @Autowired
     private TypeRepository typeRepository;
 
-    @SuppressWarnings("deprecation")
     @Override
     public ResponseEntity<Map<String, String>> handleGoogleAuth(String token) throws GeneralSecurityException, IOException {
 
@@ -67,16 +63,12 @@ public class AuthServicesImpl implements AuthServices {
 
             if (user == null) {
                 RegisterUserRequestDTO userDTO = new RegisterUserRequestDTO();
-
                 userDTO.setEmail(email);
                 userDTO.setFirstName(firstName);
                 userDTO.setLastName(lastName);
                 userDTO.setUsername(email);
                 userDTO.setPassword(Encoder.passwordencoder().encode("unused-password"));
-                userDTO.setPhoneNumber(null);
-                userDTO.setTypeId(null);
-
-                user = userServices.createUser(userDTO);
+                user = this.createUser(userDTO);
             } 
             token = jwtTokenUtil.generateToken(user.getUsername());
             return ResponseEntity.ok(Map.of("token", token));
