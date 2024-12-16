@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 @Data
 public class CurrentUserResponseDTO implements Serializable {
-    private int id;
+    private Long id;
     private String username;
     private String email;
     private String firstName;

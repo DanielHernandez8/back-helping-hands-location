@@ -37,7 +37,7 @@ public class UserTypeSeeder implements CommandLineRunner {
             if (userRepository.findByUsername("admin") == null) {
 
                 userRepository.save(new User(
-                    1,
+                    1L,
                     "admin",
                     passwordEncoder.encode("12345"),
                     "admin@example.com",
