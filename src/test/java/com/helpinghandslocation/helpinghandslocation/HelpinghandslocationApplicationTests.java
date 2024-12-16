@@ -40,8 +40,11 @@ class HelpinghandslocationApplicationTests {
 	@Order(2) 
 	void addLocationViaController(){
 
-		LocationTagDTO locationTagDTO = new LocationTagDTO("Test Name", 1.1,1.1, "Test Address", List.of(1L,2L));
-		assertNotNull(locationController.saveLocations(locationTagDTO).getBody(), "When saving the object, it needs to be returned");
+		LocationTagDTO testlocationTagDTO = new LocationTagDTO("Test Name1", 1.1,1.1, "Test Address1", List.of(2L,5L));
+		assertNotNull(locationController.saveLocations(testlocationTagDTO).getBody(), "When saving the object, it needs to be returned");
+
+		testlocationTagDTO =  new LocationTagDTO("Test Name2", 2.2,2.2, "Test Address2", List.of(2L,7L));
+		assertNotNull(locationController.saveLocations(testlocationTagDTO).getBody(), "When saving the object, it needs to be returned");
 
 	}
 
