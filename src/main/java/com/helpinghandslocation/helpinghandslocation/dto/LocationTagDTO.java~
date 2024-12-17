@@ -28,5 +28,5 @@ public class LocationTagDTO implements Serializable {
     public LocationTagDTO() {
 
     }
-
+    
 }

@@ -31,7 +31,6 @@ public class LocationServicesImpl implements LocationServices {
         if (locationTagDTO.getId() != null) {
             throw new RuntimeException("El ID no debe proporcionarse en la creación");
         }
-        //me traigo el currentuser
         CurrentUserResponseDTO currentUserResponseDTO = userServices.getCurrentUser();
 
         // Crear nueva ubicación
