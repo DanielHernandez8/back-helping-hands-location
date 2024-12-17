@@ -27,12 +27,12 @@ public class AuthController {
     AuthServices authServices;
 
     @PostMapping ("/basic/login")
-    public ResponseEntity<?> basicLogin(LoginRequestDTO loginRequestDTO) {
+    public ResponseEntity<?> basicLogin(@RequestBody LoginRequestDTO loginRequestDTO) {
         try {
-            String token = jwtTokenUtil.generateToken(loginRequestDTO.getUsername());
+            String token = authServices.basicLogin(loginRequestDTO);
             return ResponseEntity.ok(Map.of("token", token));
         } catch (IllegalArgumentException e) {
-                return ResponseEntity.status(400).body("Error: Username o contraseña incorrectos "  + e.getMessage());
+                return ResponseEntity.status(400).body("Error: "  + e.getMessage());
             } catch (RuntimeException e) {
             return ResponseEntity.status(500).body("Error del Servidor " + e.getMessage());
         }
@@ -54,7 +54,8 @@ public class AuthController {
     public ResponseEntity<?> handleGoogleToken(@RequestBody Map<String, String> payload) {
         String token = payload.get("token");
         try {
-            return authServices.handleGoogleAuth(token);
+            token =  authServices.handleGoogleAuth(token);
+            return ResponseEntity.status(200).body(Map.of("token", token));
         } catch (Exception e) {
             return ResponseEntity.status(401).body("Token verification failed: " + e.getMessage());
         }

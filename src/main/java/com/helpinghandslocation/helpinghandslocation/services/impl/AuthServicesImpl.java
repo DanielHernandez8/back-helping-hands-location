@@ -5,6 +5,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 import com.helpinghandslocation.helpinghandslocation.config.Encoder;
+import com.helpinghandslocation.helpinghandslocation.dto.request.LoginRequestDTO;
 import com.helpinghandslocation.helpinghandslocation.dto.request.RegisterUserRequestDTO;
 import com.helpinghandslocation.helpinghandslocation.models.Type;
 import com.helpinghandslocation.helpinghandslocation.models.User;
@@ -38,12 +39,22 @@ public class AuthServicesImpl implements AuthServices {
     @Autowired
     private UserServices userServices;
 
-    @Autowired
-    private TypeRepository typeRepository;
-
-    @SuppressWarnings("deprecation")
     @Override
-    public ResponseEntity<Map<String, String>> handleGoogleAuth(String token) throws GeneralSecurityException, IOException {
+    public String basicLogin(LoginRequestDTO loginRequestDTO) throws IllegalArgumentException{
+
+        User user = userRepository.findByUsername(loginRequestDTO.getUsername());
+
+        if(user == null){
+            throw new IllegalArgumentException("User not found");
+        } else if(!Encoder.passwordencoder().matches(loginRequestDTO.getPassword(), user.getPassword())){
+            throw new IllegalArgumentException("Invalid password");
+        }
+
+        return jwtTokenUtil.generateToken(loginRequestDTO.getUsername());
+    }
+
+    @Override
+    public String handleGoogleAuth(String token) throws GeneralSecurityException, IOException {
 
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(
                 new NetHttpTransport(),
@@ -78,10 +89,9 @@ public class AuthServicesImpl implements AuthServices {
 
                 user = userServices.createUser(userDTO);
             } 
-            token = jwtTokenUtil.generateToken(user.getUsername());
-            return ResponseEntity.ok(Map.of("token", token));
+            return jwtTokenUtil.generateToken(user.getUsername());
         } else {
-            return ResponseEntity.status(401).body(Map.of("Error","Invalid token"));
+            throw new IllegalArgumentException("Invalid token");
         }
     }
 }
