@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Setter
@@ -45,6 +46,9 @@ public class User implements UserDetails {
     @ManyToOne
     @JoinColumn(name = "type_id", nullable = true)
     private Type type;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Location> locations = new ArrayList<>();
 
     public User(long id, String username, String password, String email, String firstName, String lastName, String phoneNumber, boolean b, boolean b1, boolean b2, boolean b3, Type particular) {
         this.id = id;

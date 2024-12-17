@@ -2,15 +2,19 @@ package com.helpinghandslocation.helpinghandslocation.seeders;
 
 import com.helpinghandslocation.helpinghandslocation.models.Location;
 import com.helpinghandslocation.helpinghandslocation.models.Tag;
+import com.helpinghandslocation.helpinghandslocation.models.User;
 import com.helpinghandslocation.helpinghandslocation.repositories.LocationRepository;
 import com.helpinghandslocation.helpinghandslocation.repositories.TagRespository;
 
 import java.util.ArrayList;
 
+import com.helpinghandslocation.helpinghandslocation.repositories.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class LocationTagSeeder implements CommandLineRunner {
     @Autowired
@@ -18,6 +22,9 @@ public class LocationTagSeeder implements CommandLineRunner {
 
     @Autowired
     LocationRepository locationRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
 
     @Override
@@ -46,107 +53,122 @@ public class LocationTagSeeder implements CommandLineRunner {
             tagRespository.save(new Tag(19,"Juguetes"));
         }
 
-        if(locationRepository.count() == 0){
-            Location fundacioRoureLocation = new Location (1L, "Fundació Roure", 41.386459, 2.180347, "Carrer dels Cecs de Sant Cugat, 1, Ciutat Vella, 08003 Barcelona");
-            fundacioRoureLocation.setTags(new ArrayList<Tag>(){{
-                add(tagRespository.findById(1L).orElse(null));
-                add(tagRespository.findById(2L).orElse(null));
-                add(tagRespository.findById(7L).orElse(null));
-                add(tagRespository.findById(11L).orElse(null));
-                add(tagRespository.findById(5L).orElse(null));
-            }});
-            locationRepository.save(fundacioRoureLocation);
+        if(locationRepository.count() == 0) {
+            User adminUser = userRepository.findByUsername("admin");
+            if (adminUser != null) {
 
-            Location fundacionAltiusLocation = new Location (2L, "Fundacion Altius", 41.382648, 2.186254, "Carrer del Doctor Aiguader 5, 08003 Barcelona");
-            fundacionAltiusLocation.setTags(new ArrayList<Tag>(){{
-                add(tagRespository.findById(1L).orElse(null));
-                add(tagRespository.findById(2L).orElse(null));
-                add(tagRespository.findById(7L).orElse(null));
-            }});
+                Location fundacioRoureLocation = new Location(1L, "Fundació Roure", 41.386459, 2.180347, "Carrer dels Cecs de Sant Cugat, 1, Ciutat Vella, 08003 Barcelona");
+                fundacioRoureLocation.setTags(new ArrayList<Tag>() {{
+                    add(tagRespository.findById(1L).orElse(null));
+                    add(tagRespository.findById(2L).orElse(null));
+                    add(tagRespository.findById(7L).orElse(null));
+                    add(tagRespository.findById(11L).orElse(null));
+                    add(tagRespository.findById(5L).orElse(null));
+                    fundacioRoureLocation.setUser(adminUser);
+                }});
+                locationRepository.save(fundacioRoureLocation);
 
-            locationRepository.save(fundacionAltiusLocation);
+                Location fundacionAltiusLocation = new Location(2L, "Fundacion Altius", 41.382648, 2.186254, "Carrer del Doctor Aiguader 5, 08003 Barcelona");
+                fundacionAltiusLocation.setTags(new ArrayList<Tag>() {{
+                    add(tagRespository.findById(1L).orElse(null));
+                    add(tagRespository.findById(2L).orElse(null));
+                    add(tagRespository.findById(7L).orElse(null));
+                    fundacionAltiusLocation.setUser(adminUser);
+
+                }});
+                locationRepository.save(fundacionAltiusLocation);
 
 
-            Location comedorSocialReinaDeLaPaz = new Location (3L, "Comedor Social Reina de la Paz", 41.380066, 2.172430, "Plaça de Sant Agustí, 2, Ciutat Vella, 08001 Barcelona");
-            comedorSocialReinaDeLaPaz.setTags(new ArrayList<Tag>(){{
-                add(tagRespository.findById(1L).orElse(null));
-                add(tagRespository.findById(2L).orElse(null));
-                add(tagRespository.findById(4L).orElse(null));
-                add(tagRespository.findById(9L).orElse(null));
-            }});
-            locationRepository.save(comedorSocialReinaDeLaPaz);
+                Location comedorSocialReinaDeLaPaz = new Location(3L, "Comedor Social Reina de la Paz", 41.380066, 2.172430, "Plaça de Sant Agustí, 2, Ciutat Vella, 08001 Barcelona");
+                comedorSocialReinaDeLaPaz.setTags(new ArrayList<Tag>() {{
+                    add(tagRespository.findById(1L).orElse(null));
+                    add(tagRespository.findById(2L).orElse(null));
+                    add(tagRespository.findById(4L).orElse(null));
+                    add(tagRespository.findById(9L).orElse(null));
+                    comedorSocialReinaDeLaPaz.setUser(adminUser);
+                }});
+                locationRepository.save(comedorSocialReinaDeLaPaz);
 
-            Location comedorSocialDelParalelo = new Location(4L, "Comedor Social del Paralelo", 41.374785, 2.163638, "Av. del Paral·lel, 97B, Sants-Montjuïc, 08004 Barcelona");
-            comedorSocialDelParalelo.setTags(new ArrayList<Tag>(){{
-                add(tagRespository.findById(1L).orElse(null));
-                add(tagRespository.findById(2L).orElse(null));
-                add(tagRespository.findById(4L).orElse(null));
-                add(tagRespository.findById(9L).orElse(null));
-            }});
-            locationRepository.save(comedorSocialDelParalelo);
+                Location comedorSocialDelParalelo = new Location(4L, "Comedor Social del Paralelo", 41.374785, 2.163638, "Av. del Paral·lel, 97B, Sants-Montjuïc, 08004 Barcelona");
+                comedorSocialDelParalelo.setTags(new ArrayList<Tag>() {{
+                    add(tagRespository.findById(1L).orElse(null));
+                    add(tagRespository.findById(2L).orElse(null));
+                    add(tagRespository.findById(4L).orElse(null));
+                    add(tagRespository.findById(9L).orElse(null));
+                    comedorSocialDelParalelo.setUser(adminUser);
+                }});
+                locationRepository.save(comedorSocialDelParalelo);
 
-            Location fundacioCatalanaDelEsplai = new Location(5L, "Fundació Catalana del Esplai", 41.315704, 2.082488, "Edifici Centre Esplai, Carrer del Riu Anoia, 44, 54, 08820 El Prat de Llobregat, Barcelona");
-            fundacioCatalanaDelEsplai.setTags(new ArrayList<Tag>(){{
-                add(tagRespository.findById(1L).orElse(null));
-                add(tagRespository.findById(2L).orElse(null));
-                add(tagRespository.findById(3L).orElse(null));
-                add(tagRespository.findById(4L).orElse(null));
-                add(tagRespository.findById(5L).orElse(null));
-                add(tagRespository.findById(6L).orElse(null));
-                add(tagRespository.findById(8L).orElse(null));
-                add(tagRespository.findById(9L).orElse(null));
-                add(tagRespository.findById(11L).orElse(null));
-                add(tagRespository.findById(12L).orElse(null));
-                add(tagRespository.findById(14L).orElse(null));
-            }});
-            locationRepository.save(fundacioCatalanaDelEsplai);
+                Location fundacioCatalanaDelEsplai = new Location(5L, "Fundació Catalana del Esplai", 41.315704, 2.082488, "Edifici Centre Esplai, Carrer del Riu Anoia, 44, 54, 08820 El Prat de Llobregat, Barcelona");
+                fundacioCatalanaDelEsplai.setTags(new ArrayList<Tag>() {{
+                    add(tagRespository.findById(1L).orElse(null));
+                    add(tagRespository.findById(2L).orElse(null));
+                    add(tagRespository.findById(3L).orElse(null));
+                    add(tagRespository.findById(4L).orElse(null));
+                    add(tagRespository.findById(5L).orElse(null));
+                    add(tagRespository.findById(6L).orElse(null));
+                    add(tagRespository.findById(8L).orElse(null));
+                    add(tagRespository.findById(9L).orElse(null));
+                    add(tagRespository.findById(11L).orElse(null));
+                    add(tagRespository.findById(12L).orElse(null));
+                    add(tagRespository.findById(14L).orElse(null));
+                    fundacioCatalanaDelEsplai.setUser(adminUser);
+                }});
+                locationRepository.save(fundacioCatalanaDelEsplai);
 
-            Location fundacionMadrina = new Location(6L, "Fundacion Madrina", 40.462528, -3.695973, "C. del Limonero, 26, Tetuán, 28020 Madrid");
-            fundacionMadrina.setTags(new ArrayList<Tag>(){{
-                add(tagRespository.findById(3L).orElse(null));
-                add(tagRespository.findById(17L).orElse(null));
-                add(tagRespository.findById(18L).orElse(null));
-                add(tagRespository.findById(19L).orElse(null));
-            }});
-            locationRepository.save(fundacionMadrina);
+                Location fundacionMadrina = new Location(6L, "Fundacion Madrina", 40.462528, -3.695973, "C. del Limonero, 26, Tetuán, 28020 Madrid");
+                fundacionMadrina.setTags(new ArrayList<Tag>() {{
+                    add(tagRespository.findById(3L).orElse(null));
+                    add(tagRespository.findById(17L).orElse(null));
+                    add(tagRespository.findById(18L).orElse(null));
+                    add(tagRespository.findById(19L).orElse(null));
+                    fundacionMadrina.setUser(adminUser);
+                }});
+                locationRepository.save(fundacionMadrina);
 
-            Location comedorSocialSanJuanBautista = new Location(7L, "Comedor Social San Juan Bautista", 40.468560, -3.695973, "C. de la Costa Verde, 15, Tetuán, 28029 Madrid");
-            comedorSocialSanJuanBautista.setTags(new ArrayList<Tag>(){{
-                add(tagRespository.findById(1L).orElse(null));
-                add(tagRespository.findById(2L).orElse(null));
-                add(tagRespository.findById(3L).orElse(null));
-                add(tagRespository.findById(4L).orElse(null));
-                add(tagRespository.findById(5L).orElse(null));
-                add(tagRespository.findById(7L).orElse(null));
-                add(tagRespository.findById(9L).orElse(null));
-                add(tagRespository.findById(14L).orElse(null));
-                add(tagRespository.findById(19L).orElse(null));
-            }});
-            locationRepository.save(comedorSocialSanJuanBautista);
+                Location comedorSocialSanJuanBautista = new Location(7L, "Comedor Social San Juan Bautista", 40.468560, -3.695973, "C. de la Costa Verde, 15, Tetuán, 28029 Madrid");
+                comedorSocialSanJuanBautista.setTags(new ArrayList<Tag>() {{
+                    add(tagRespository.findById(1L).orElse(null));
+                    add(tagRespository.findById(2L).orElse(null));
+                    add(tagRespository.findById(3L).orElse(null));
+                    add(tagRespository.findById(4L).orElse(null));
+                    add(tagRespository.findById(5L).orElse(null));
+                    add(tagRespository.findById(7L).orElse(null));
+                    add(tagRespository.findById(9L).orElse(null));
+                    add(tagRespository.findById(14L).orElse(null));
+                    add(tagRespository.findById(19L).orElse(null));
+                    comedorSocialSanJuanBautista.setUser(adminUser);
+                }});
+                locationRepository.save(comedorSocialSanJuanBautista);
 
-            Location ayudaViolenciaDeGenero = new Location(8L, "Ayuda Violencia de Genero", 41.485501, 2.035812, "Carrer de Pitàgores, 5, 08191 Rubí, Barcelona");
-            ayudaViolenciaDeGenero.setTags(new ArrayList<Tag>(){{
-                add(tagRespository.findById(4L).orElse(null));
-                add(tagRespository.findById(17L).orElse(null));
-                add(tagRespository.findById(18L).orElse(null));
+                Location ayudaViolenciaDeGenero = new Location(8L, "Ayuda Violencia de Genero", 41.485501, 2.035812, "Carrer de Pitàgores, 5, 08191 Rubí, Barcelona");
+                ayudaViolenciaDeGenero.setTags(new ArrayList<Tag>() {{
+                    add(tagRespository.findById(4L).orElse(null));
+                    add(tagRespository.findById(17L).orElse(null));
+                    add(tagRespository.findById(18L).orElse(null));
+                    ayudaViolenciaDeGenero.setUser(adminUser);
 
-            }});
-            locationRepository.save(ayudaViolenciaDeGenero);
+                }});
+                locationRepository.save(ayudaViolenciaDeGenero);
 
-            Location ongAdan = new Location(9L, "ONG Adan", 41.461257, 2.174087, "Carrer de les Agudes, 100, Nou Barris, 08033 Barcelona");
-            ongAdan.setTags(new ArrayList<Tag>(){{
-                add(tagRespository.findById(1L).orElse(null));
-                add(tagRespository.findById(2L).orElse(null));
-                add(tagRespository.findById(3L).orElse(null));
-                add(tagRespository.findById(4L).orElse(null));
-                add(tagRespository.findById(5L).orElse(null));
-                add(tagRespository.findById(9L).orElse(null));
-                add(tagRespository.findById(12L).orElse(null));
-                add(tagRespository.findById(16L).orElse(null));
-                add(tagRespository.findById(19L).orElse(null));
+                Location ongAdan = new Location(9L, "ONG Adan", 41.461257, 2.174087, "Carrer de les Agudes, 100, Nou Barris, 08033 Barcelona");
+                ongAdan.setTags(new ArrayList<Tag>() {{
+                    add(tagRespository.findById(1L).orElse(null));
+                    add(tagRespository.findById(2L).orElse(null));
+                    add(tagRespository.findById(3L).orElse(null));
+                    add(tagRespository.findById(4L).orElse(null));
+                    add(tagRespository.findById(5L).orElse(null));
+                    add(tagRespository.findById(9L).orElse(null));
+                    add(tagRespository.findById(12L).orElse(null));
+                    add(tagRespository.findById(16L).orElse(null));
+                    add(tagRespository.findById(19L).orElse(null));
+                    ongAdan.setUser(adminUser);
 
-            }});
-            locationRepository.save(ongAdan);
+                }});
+                locationRepository.save(ongAdan);
+            }else {
+                log.debug("usuario admin no encotrado");
+            }
         }
     }
 }

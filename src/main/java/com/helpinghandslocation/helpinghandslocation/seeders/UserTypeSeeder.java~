@@ -31,6 +31,7 @@ public class UserTypeSeeder implements CommandLineRunner {
             //aqui empieza los Type
             Type particular = new Type(1L, "Particular");
             typeRepository.save(particular);
+            
             typeRepository.save(new Type(2L, "Comercio"));
 
             //user
@@ -39,7 +40,7 @@ public class UserTypeSeeder implements CommandLineRunner {
                 userRepository.save(new User(
                     1L,
                     "admin",
-                    passwordEncoder.encode("12345"),
+                    passwordEncoder.encode("admin"),
                     "admin@example.com",
                     "Admin",
                     "User",
