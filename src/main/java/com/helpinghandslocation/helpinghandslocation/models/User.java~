@@ -50,7 +50,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Location> locations = new ArrayList<>();
 
-    public User(long id, String username, String password, String email, String firstName, String lastName, String phoneNumber, boolean b, boolean b1, boolean b2, boolean b3, Type particular,User user) {
+    public User(long id, String username, String password, String email, String firstName, String lastName, String phoneNumber, boolean b, boolean b1, boolean b2, boolean b3, Type particular) {
         this.id = id;
         this.username = username;
         this.password = password;

@@ -1,5 +1,6 @@
 package com.helpinghandslocation.helpinghandslocation.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -47,6 +48,7 @@ public class User implements UserDetails {
     @JoinColumn(name = "type_id", nullable = true)
     private Type type;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Location> locations = new ArrayList<>();
 

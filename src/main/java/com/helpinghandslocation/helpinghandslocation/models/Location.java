@@ -1,5 +1,6 @@
 package com.helpinghandslocation.helpinghandslocation.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
