@@ -1,6 +1,8 @@
 package com.helpinghandslocation.helpinghandslocation.controllers;
 
 import com.helpinghandslocation.helpinghandslocation.dto.LocationTagDTO;
+import com.helpinghandslocation.helpinghandslocation.mappers.LocationMapper;
+import com.helpinghandslocation.helpinghandslocation.models.Location;
 import com.helpinghandslocation.helpinghandslocation.services.LocationServices;
 
 import java.util.List;
@@ -16,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 public class LocationController {
     @Autowired
     LocationServices locationServices;
+
+    @Autowired
+    LocationMapper locationMapper;
 
     @PostMapping
     public ResponseEntity<?> saveLocations(@RequestBody LocationTagDTO locationTagDTO) {
@@ -48,10 +53,7 @@ public class LocationController {
     @GetMapping
     public ResponseEntity<?> getLocations(@RequestParam(required = false) List<Long> tagIds) {
         try {
-            if(tagIds ==null || tagIds.isEmpty()){
-                return ResponseEntity.status(200).body(locationServices.getLocations());
-            }
-            return ResponseEntity.status(200).body(locationServices.getLocationsByTagIdsAll(tagIds));
+            return ResponseEntity.status(200).body(locationServices.getLocations(tagIds));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("Error al obtener las ubicaciones " + e.getMessage());

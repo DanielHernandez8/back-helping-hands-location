@@ -1,14 +1,22 @@
 package com.helpinghandslocation.helpinghandslocation.services.impl;
 
 import com.helpinghandslocation.helpinghandslocation.dto.LocationTagDTO;
+import com.helpinghandslocation.helpinghandslocation.dto.response.LocationCreatorDTO;
+import com.helpinghandslocation.helpinghandslocation.mappers.LocationMapper;
 import com.helpinghandslocation.helpinghandslocation.models.Location;
 import com.helpinghandslocation.helpinghandslocation.models.Tag;
+import com.helpinghandslocation.helpinghandslocation.models.User;
 import com.helpinghandslocation.helpinghandslocation.repositories.LocationRepository;
 import com.helpinghandslocation.helpinghandslocation.repositories.TagRespository;
+import com.helpinghandslocation.helpinghandslocation.repositories.UserRepository;
 import com.helpinghandslocation.helpinghandslocation.services.LocationServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,11 +28,24 @@ public class LocationServicesImpl implements LocationServices {
     @Autowired
     private TagRespository tagRespository;
 
+    @Autowired 
+    private UserRepository userRepository;
+
+    @Autowired
+    private LocationMapper locationMapper;
+
     @Override
     public LocationTagDTO createLocation(LocationTagDTO locationTagDTO) {
+        User currentUser = null;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         // Validar que el ID no sea proporcionado en la creación
         if (locationTagDTO.getId() != null) {
             throw new RuntimeException("El ID no debe proporcionarse en la creación");
+        }
+
+        if(authentication != null && authentication.isAuthenticated()){
+            currentUser = userRepository.findByUsername(authentication.getName());
         }
 
         // Crear nueva ubicación
@@ -33,6 +54,7 @@ public class LocationServicesImpl implements LocationServices {
         location.setLatitude(locationTagDTO.getLatitude());
         location.setLongitude(locationTagDTO.getLongitude());
         location.setAddress(locationTagDTO.getAddress());
+        location.setCreatedBy(currentUser);
 
         // Asociar los tags
         for (Long tagId : locationTagDTO.getTagIds()) {
@@ -56,8 +78,13 @@ public class LocationServicesImpl implements LocationServices {
     }
 
     @Override
-    public List<Location> getLocations() {
-        return locationRepository.findAll();
+    public List<LocationCreatorDTO> getLocations(List<Long> tagIds) {
+
+        if(tagIds ==null || tagIds.isEmpty()){
+            return locationMapper.locationTagCreatorDTOList(locationRepository.findAll());
+        }
+        return locationMapper.locationTagCreatorDTOList(locationRepository.findByTagsIdInAll(tagIds));
+
     }
 
     @Override
@@ -94,19 +121,12 @@ public class LocationServicesImpl implements LocationServices {
     }
 
     @Override
-    public Location deleteLocation(Long id) {
-        // Buscar la ubicación por ID
-        Location location = locationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ubicación no encontrada con ID: " + id));
+    public void deleteLocation(Long id) {
 
-        // Eliminar la ubicación
+        Location location = new Location();
+
+        location.setId(id);
+
         locationRepository.delete(location);
-
-        return location;
-    }
-
-    @Override
-    public List<Location> getLocationsByTagIdsAll(List<Long> tagIds) {
-        return locationRepository.findByTagsIdInAll(tagIds);
     }
 }

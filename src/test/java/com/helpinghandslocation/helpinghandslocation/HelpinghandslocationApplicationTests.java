@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.helpinghandslocation.helpinghandslocation.controllers.LocationController;
 import com.helpinghandslocation.helpinghandslocation.dto.LocationTagDTO;
+import com.helpinghandslocation.helpinghandslocation.dto.response.LocationCreatorDTO;
 import com.helpinghandslocation.helpinghandslocation.models.Location;
 import com.helpinghandslocation.helpinghandslocation.models.Tag;
 import com.helpinghandslocation.helpinghandslocation.repositories.LocationRepository;
@@ -66,7 +67,7 @@ class HelpinghandslocationApplicationTests {
 	void allLocationsHaveRequestedTags(){
 		
 		List <Long> requestedTagIds = List.of(2L, 5L);
-		List<Location> allControllerLocations = (List<Location>) locationController.getLocations(requestedTagIds).getBody();		
+		List<LocationCreatorDTO> allControllerLocations = (List<LocationCreatorDTO>) locationController.getLocations(requestedTagIds).getBody();		
 
 		assertNotNull(allControllerLocations, "Controller should return a list");
 
