@@ -2,7 +2,6 @@ package com.helpinghandslocation.helpinghandslocation.controllers;
 
 import com.helpinghandslocation.helpinghandslocation.dto.LocationTagDTO;
 import com.helpinghandslocation.helpinghandslocation.mappers.LocationMapper;
-import com.helpinghandslocation.helpinghandslocation.models.Location;
 import com.helpinghandslocation.helpinghandslocation.services.LocationServices;
 
 import java.util.List;
@@ -64,7 +63,6 @@ public class LocationController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateLocation(@PathVariable Long id, @RequestBody LocationTagDTO locationTagDTO) {
         try {
-            // Llama al servicio con el ID del path y el DTO del body
             LocationTagDTO updatedLocation = locationServices.updateLocation(id, locationTagDTO);
             return ResponseEntity.ok(updatedLocation);
         } catch (IllegalArgumentException e) {

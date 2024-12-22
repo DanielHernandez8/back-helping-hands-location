@@ -11,12 +11,10 @@ import com.helpinghandslocation.helpinghandslocation.repositories.TagRespository
 import com.helpinghandslocation.helpinghandslocation.repositories.UserRepository;
 import com.helpinghandslocation.helpinghandslocation.services.LocationServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -39,16 +37,14 @@ public class LocationServicesImpl implements LocationServices {
         User currentUser = null;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        // Validar que el ID no sea proporcionado en la creación
         if (locationTagDTO.getId() != null) {
-            throw new RuntimeException("El ID no debe proporcionarse en la creación");
+            throw new IllegalArgumentException("El ID no debe proporcionarse en la creación");
         }
 
         if(authentication != null && authentication.isAuthenticated()){
             currentUser = userRepository.findByUsername(authentication.getName());
         }
 
-        // Crear nueva ubicación
         Location location = new Location();
         location.setName(locationTagDTO.getName());
         location.setLatitude(locationTagDTO.getLatitude());
@@ -56,19 +52,16 @@ public class LocationServicesImpl implements LocationServices {
         location.setAddress(locationTagDTO.getAddress());
         location.setCreatedBy(currentUser);
 
-        // Asociar los tags
         for (Long tagId : locationTagDTO.getTagIds()) {
             Tag tag = tagRespository.findById(tagId)
-                    .orElseThrow(() -> new RuntimeException("Tag no encontrado con ID: " + tagId));
+                    .orElseThrow(() -> new IllegalArgumentException("Tag no encontrado con ID: " + tagId));
             location.getTags().add(tag);
         }
 
-        // Guardar la ubicación en la base de datos
         Location locationTarget = locationRepository.save(location);
 
-        // Mapear la entidad guardada al DTO de respuesta
         LocationTagDTO responseDTO = new LocationTagDTO();
-        responseDTO.setId(locationTarget.getId()); // ID generado
+        responseDTO.setId(locationTarget.getId()); 
         responseDTO.setName(locationTarget.getName());
         responseDTO.setLatitude(locationTarget.getLatitude());
         responseDTO.setLongitude(locationTarget.getLongitude());
@@ -89,29 +82,24 @@ public class LocationServicesImpl implements LocationServices {
 
     @Override
     public LocationTagDTO updateLocation(Long id, LocationTagDTO locationTagDTO) {
-        // Buscar la ubicación por ID
         Location location = locationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ubicación no encontrada con ID: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Ubicación no encontrada con ID: " + id));
 
-        // Actualizar los datos de la ubicación
         location.setName(locationTagDTO.getName());
         location.setLatitude(locationTagDTO.getLatitude());
         location.setLongitude(locationTagDTO.getLongitude());
 
-        // Limpiar y actualizar los tags asociados
         location.getTags().clear();
         for (Long tagId : locationTagDTO.getTagIds()) {
             Tag tag = tagRespository.findById(tagId)
-                    .orElseThrow(() -> new RuntimeException("Tag no encontrado con ID: " + tagId));
+                    .orElseThrow(() -> new IllegalArgumentException("Tag no encontrado con ID: " + tagId));
             location.getTags().add(tag);
         }
 
-        // Guardar los cambios
         Location locationUpdated = locationRepository.save(location);
 
-        // Mapear la entidad actualizada al DTO de respuesta
         LocationTagDTO responseDTO = new LocationTagDTO();
-        responseDTO.setId(locationUpdated.getId()); // ID actualizado
+        responseDTO.setId(locationUpdated.getId()); 
         responseDTO.setName(locationUpdated.getName());
         responseDTO.setLatitude(locationUpdated.getLatitude());
         responseDTO.setLongitude(locationUpdated.getLongitude());
@@ -122,11 +110,17 @@ public class LocationServicesImpl implements LocationServices {
 
     @Override
     public void deleteLocation(Long id) {
-
-        Location location = new Location();
-
-        location.setId(id);
-
-        locationRepository.delete(location);
+        try {
+            if (id == null || id <= 0) {
+                throw new IllegalArgumentException("The provided ID is invalid.");
+            }
+            Location location = new Location();
+            location.setId(id);
+            locationRepository.delete(location);    
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException( "An unexpected error occurred while deleting the location: " + e.getMessage());
+        }
     }
 }
