@@ -7,22 +7,19 @@ import com.google.api.client.json.gson.GsonFactory;
 import com.helpinghandslocation.helpinghandslocation.config.Encoder;
 import com.helpinghandslocation.helpinghandslocation.dto.request.LoginRequestDTO;
 import com.helpinghandslocation.helpinghandslocation.dto.request.RegisterUserRequestDTO;
-import com.helpinghandslocation.helpinghandslocation.models.Type;
 import com.helpinghandslocation.helpinghandslocation.models.User;
-import com.helpinghandslocation.helpinghandslocation.repositories.TypeRepository;
 import com.helpinghandslocation.helpinghandslocation.repositories.UserRepository;
 import com.helpinghandslocation.helpinghandslocation.services.AuthServices;
 import com.helpinghandslocation.helpinghandslocation.services.UserServices;
 import com.helpinghandslocation.helpinghandslocation.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+
 import java.util.Collections;
-import java.util.Map;
 
 @Service
 public class AuthServicesImpl implements AuthServices {
